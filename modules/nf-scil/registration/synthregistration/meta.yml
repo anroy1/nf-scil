@@ -1,0 +1,61 @@
+---
+## DONT FORGET TO DECOMMENT yaml
+## yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/modules/yaml-schema.json
+
+name: "registration_synthregistration"
+description: Perform registration using SynthMorph from Freesurfer
+keywords:
+  - registration
+  - Brain imaging
+  - MRI
+tools:
+  - "Freesurfer":
+      description: "Freesurfer Toolbox"
+      homepage: "https://surfer.nmr.mgh.harvard.edu/"
+
+
+## TODO nf-core: Add a description of all of the variables used as input
+input:
+  # Only when we have meta
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. `[ id:'test', single_end:false ]`
+
+  - moving:
+      type: file
+      description: Nifti volume moving for registration
+      pattern: "*.{nii,nii.gz}"
+
+  - fixed:
+      type: file
+      description: Nifti volume fixed for registration
+      pattern: "*.{nii,nii.gz}"
+
+## TODO nf-core: Add a description of all of the variables used as output
+output:
+  #Only when we have meta
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. `[ id:'test', single_end:false ]`
+
+  - warped:
+      type: file
+      description: Nifti volume moved after registration
+      pattern: "*.{nii,nii.gz}"
+
+  - warp:
+      type: file
+      description: Displacement field
+      pattern: "*.{mgz}"
+  
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+
+authors:
+  - "@scilus"
