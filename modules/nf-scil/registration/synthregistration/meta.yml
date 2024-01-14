@@ -1,7 +1,4 @@
 ---
-## DONT FORGET TO DECOMMENT yaml
-## yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/modules/yaml-schema.json
-
 name: "registration_synthregistration"
 description: Perform registration using SynthMorph from Freesurfer
 keywords:
@@ -14,9 +11,7 @@ tools:
       homepage: "https://surfer.nmr.mgh.harvard.edu/"
 
 
-## TODO nf-core: Add a description of all of the variables used as input
 input:
-  # Only when we have meta
   - meta:
       type: map
       description: |
@@ -33,24 +28,22 @@ input:
       description: Nifti volume fixed for registration
       pattern: "*.{nii,nii.gz}"
 
-## TODO nf-core: Add a description of all of the variables used as output
 output:
-  #Only when we have meta
   - meta:
       type: map
       description: |
         Groovy Map containing sample information
         e.g. `[ id:'test', single_end:false ]`
 
-  - warped:
+  - init:
       type: file
-      description: Nifti volume moved after registration
-      pattern: "*.{nii,nii.gz}"
+      description: Affine transform for initialization
+      pattern: "*.{txt}"
 
-  - warp:
+  - deform:
       type: file
-      description: Displacement field
-      pattern: "*.{mgz}"
+      description: Deform transformation
+      pattern: "*.{nii,.nii.gz}"
   
   - versions:
       type: file
