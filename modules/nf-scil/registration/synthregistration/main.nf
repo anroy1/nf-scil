@@ -9,6 +9,7 @@ process REGISTRATION_SYNTHREGISTRATION {
     input:
     tuple val(meta), path(moving), path(fixed)
 
+
     output:
     tuple val(meta), path("*__*_output_warped.nii.gz"), emit: warped_image
     tuple val(meta), path("*__deform_warp.nii.gz"), emit: deform_transform
@@ -16,12 +17,12 @@ process REGISTRATION_SYNTHREGISTRATION {
     path "versions.yml"           , emit: versions
 
     when:
-    task.ext.when == null || task.ext.when
+    task.ext.when == null || task.ext.when_output_warped
 
     script:
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
-    def suffix = task.ext.suffix ?: "${meta.}"
+    def suffix = task.ext.suffix ?: ""
 
     def header = task.ext.header ? "-H "  + task.ext.header : ""
     def threads = task.ext.threads ? "-j "  + task.ext.threads : ""
@@ -30,7 +31,8 @@ process REGISTRATION_SYNTHREGISTRATION {
     def extent = task.ext.extent ? "-e "  + task.ext.extent : ""
     def weight = task.ext.weight ? "-w "  + task.ext.weight : ""
 
-    def out = task.ext.out ? "--out" + task.ext.out : "lps"
+    //For argument definition, mri_warp_convert -h
+    def out = task.ext.out ? "--out" + task.ext.out : "--outlps"
 
     """
     export ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS=1
