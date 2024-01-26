@@ -2,9 +2,7 @@ process REGISTRATION_SYNTHREGISTRATION {
     tag "$meta.id"
     label 'process_single'
 
-    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'freesurfer/synthmorph:latest':
-        'freesurfer/synthmorph:latest' }"
+    container "freesurfer/synthmorph:latest"
 
     input:
     tuple val(meta), path(moving), path(fixed)
@@ -31,7 +29,7 @@ process REGISTRATION_SYNTHREGISTRATION {
     def extent = task.ext.extent ? "-e "  + task.ext.extent : ""
     def weight = task.ext.weight ? "-w "  + task.ext.weight : ""
 
-    //For argument definition, mri_warp_convert -h
+    //For arguments definition, mri_warp_convert -h
     def out = task.ext.out ? "--out" + task.ext.out : "--outlps"
 
     """
