@@ -3,8 +3,8 @@ process REGISTRATION_SYNTHREGISTRATION {
     label 'process_single'
 
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://scil.usherbrooke.ca/containers/scilus_1.6.0.sif':
-        'scilus/scilus:1.6.0' }"
+        'freesurfer/synthmorph:latest':
+        'freesurfer/synthmorph:latest' }"
 
     input:
     tuple val(meta), path(moving), path(fixed)
@@ -13,11 +13,11 @@ process REGISTRATION_SYNTHREGISTRATION {
     output:
     tuple val(meta), path("*__*_output_warped.nii.gz"), emit: warped_image
     tuple val(meta), path("*__deform_warp.nii.gz"), emit: deform_transform
-    tuple val (meta), path("*__init_warp.txt"), emit: affine_transform
+    tuple val (meta), path("*__init_warp.txt"), emit: init_transform
     path "versions.yml"           , emit: versions
 
     when:
-    task.ext.when == null || task.ext.when_output_warped
+    task.ext.when == null || task.ext.when
 
     script:
     def args = task.ext.args ?: ''
