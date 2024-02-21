@@ -4,10 +4,10 @@ nextflow.enable.dsl = 2
 
 include { LOAD_TEST_DATA } from '../../../../../modules/nf-scil/load_test_data/main.nf'
 include {
-    REGISTRATION_SYNTHREGISTRATION as T1_FA; } from '../../../../../modules/nf-scil/registration/synthregistration/main.nf'
+    REGISTRATION_SYNTHREGISTRATION as REGISTRATION_SYNTHREGISTRATION_T1FA; } from '../../../../../modules/nf-scil/registration/synthregistration/main.nf'
 
 workflow test_registration_synthregistration {
-    
+
     input_fetch = Channel.from( [ "others.zip" ] )
 
     LOAD_TEST_DATA ( input_fetch, "test.load-test-data" )
@@ -19,6 +19,6 @@ workflow test_registration_synthregistration {
             file("${test_data_directory}/fa.nii.gz")
     ]}
 
-    REGISTRATION_SYNTHREGISTRATION ( input_t1fa )
+    REGISTRATION_SYNTHREGISTRATION_T1FA ( input_t1fa )
 
 }

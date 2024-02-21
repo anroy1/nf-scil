@@ -44,14 +44,14 @@ process REGISTRATION_SYNTHREGISTRATION {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        : \$(echo \$(samtools --version 2>&1) | sed 's/^.*samtools //; s/Using.*\$//' ))
+        Freesurfer: 7.4
     END_VERSIONS
     """
 
     stub:
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
-    def suffix = task.ext.suffix ?: "${meta.}"
+    def suffix = task.ext.suffix ?: ""
 
     def header = task.ext.header ? "-H "  + task.ext.header : ""
     def threads = task.ext.threads ? "-j "  + task.ext.threads : ""
