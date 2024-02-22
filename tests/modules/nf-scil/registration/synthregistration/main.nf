@@ -2,7 +2,7 @@
 
 nextflow.enable.dsl = 2
 
-include { LOAD_TEST_DATA } from '../../../../../modules/nf-scil/load_test_data/main.nf'
+include { LOAD_TEST_DATA } from '../../../../../subworkflows/nf-scil/load_test_data/main.nf'
 include {
     REGISTRATION_SYNTHREGISTRATION as REGISTRATION_SYNTHREGISTRATION_T1FA; } from '../../../../../modules/nf-scil/registration/synthregistration/main.nf'
 
