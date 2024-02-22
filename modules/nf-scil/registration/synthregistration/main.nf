@@ -20,27 +20,29 @@ process REGISTRATION_SYNTHREGISTRATION {
     script:
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
-    def suffix = task.ext.suffix ?: ""
+    def suffix = task.ext.suffix ?: "${meta.id}"
 
-    def header = task.ext.header ? "-H "  + task.ext.header : ""
-    def threads = task.ext.threads ? "-j "  + task.ext.threads : ""
-    def gpu = task.ext.gpu ? "-g "  + task.ext.gpu : ""
-    def smooth = task.ext.smooth ? "-s "  + task.ext.smooth : ""
-    def extent = task.ext.extent ? "-e "  + task.ext.extent : ""
-    def weight = task.ext.weight ? "-w "  + task.ext.weight : ""
+    def init = task.ext.init ? "-m " + task.est.init : "-m affine"
+    def warp = task.ext.warp ? "-m " + task.est.warp : "-m deform"
+    def header = task.ext.header ? "-H " + task.ext.header : ""
+    def threads = task.ext.threads ? "-j " + task.ext.threads : ""
+    def gpu = task.ext.gpu ? "-g " + task.ext.gpu : ""
+    def smooth = task.ext.smooth ? "-s " + task.ext.smooth : ""
+    def extent = task.ext.extent ? "-e " + task.ext.extent : ""
+    def weight = task.ext.weight ? "-w " + task.ext.weight : ""
 
     //For arguments definition, mri_warp_convert -h
-    def out = task.ext.out ? "--out" + task.ext.out : "--outlps"
+    def out_format = task.ext.out_format ? "--out" + task.ext.out_format : "--outlps"
 
     """
     export ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS=1
     export OMP_NUM_THREADS=1
     export OPENBLAS_NUM_THREADS=1
 
-    mri_synthmorph -m affine -t ${prefix}__init_warp.txt $moving $fixed
-    mri_synthmorph -m deform -i ${prefix}__init_warp.txt  -t temp.mgz -o ${prefix}__${suffix}_output_warped.nii.gz $moving $fixed
+    mri_synthmorph $init -t ${prefix}__init_warp.txt $moving $fixed
+    mri_synthmorph $warp -i ${prefix}__init_warp.txt  -t temp.mgz -o ${prefix}__${suffix}_output_warped.nii.gz $moving $fixed
 
-    mri_warp_convert -g $moving --inras temp.mgz $out ${prefix}__deform_warp.nii.gz
+    mri_warp_convert -g $moving --inras temp.mgz $out_format ${prefix}__deform_warp.nii.gz
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
@@ -53,14 +55,6 @@ process REGISTRATION_SYNTHREGISTRATION {
     def prefix = task.ext.prefix ?: "${meta.id}"
     def suffix = task.ext.suffix ?: ""
 
-    def header = task.ext.header ? "-H "  + task.ext.header : ""
-    def threads = task.ext.threads ? "-j "  + task.ext.threads : ""
-    def gpu = task.ext.gpu ? "-g "  + task.ext.gpu : ""
-    def smooth = task.ext.smooth ? "-s "  + task.ext.smooth : ""
-    def extent = task.ext.extent ? "-e "  + task.ext.extent : ""
-    def weight = task.ext.weight ? "-w "  + task.ext.weight : ""
-
-    def out = task.ext.out ? "--out" + task.ext.out : "lps"
     """
     mri_synthmorph -h
 
