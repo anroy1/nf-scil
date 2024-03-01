@@ -5,7 +5,7 @@ process REGISTRATION_SYNTHREGISTRATION {
     container "freesurfer/synthmorph:latest"
 
     input:
-    tuple val(meta), path(moving), path(fixed)
+    tuple val(meta), path(moving), path(fixed), path(fs_license) /* optional, value = [] */
 
 
     output:
@@ -35,6 +35,15 @@ process REGISTRATION_SYNTHREGISTRATION {
     def out_format = task.ext.out_format ? "--out" + task.ext.out_format : "--outlps"
 
     """
+    # Manage the license. (Save old one if existed.)
+    if [ $fs_license = [] ]; then
+        echo "License not given in input. Using default environment. "
+    else
+        cp $fs_license .license
+        here=`pwd`
+        export FS_LICENSE=\$here/.license
+    fi
+
     export ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS=1
     export OMP_NUM_THREADS=1
     export OPENBLAS_NUM_THREADS=1
@@ -43,6 +52,11 @@ process REGISTRATION_SYNTHREGISTRATION {
     mri_synthmorph $warp -i ${prefix}__init_warp.txt  -t temp.mgz -o ${prefix}__${suffix}_output_warped.nii.gz $moving $fixed
 
     mri_warp_convert -g $moving --inras temp.mgz $out_format ${prefix}__deform_warp.nii.gz
+
+    # Remove the license
+    if [ ! $fs_license = [] ]; then
+        rm .license
+    fi
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

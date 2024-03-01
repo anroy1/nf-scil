@@ -2,23 +2,16 @@
 
 nextflow.enable.dsl = 2
 
-include { LOAD_TEST_DATA } from '../../../../../subworkflows/nf-scil/load_test_data/main.nf'
-include {
-    REGISTRATION_SYNTHREGISTRATION as REGISTRATION_SYNTHREGISTRATION_T1FA; } from '../../../../../modules/nf-scil/registration/synthregistration/main.nf'
+include { REGISTRATION_SYNTHREGISTRATION } from '../../../../../modules/nf-scil/registration/synthregistration/main.nf'
 
 workflow test_registration_synthregistration {
 
-    input_fetch = Channel.from( [ "others.zip" ] )
+    input = [
+        [ id:'test', single_end:false ], // meta map
+        file(params.test_data['registration']['synthregistration']['t1'], checkIfExists: true),
+        file(params.test_data['registration']['synthregistration']['fa'], checkIfExists: true),
+        file(params.test_data['registration']['synthregistration']['fs_license'], checkIfExists: true)
+    ]
 
-    LOAD_TEST_DATA ( input_fetch, "test.load-test-data" )
-
-    input_t1fa = LOAD_TEST_DATA.out.test_data_directory
-            .map{ test_data_directory -> [
-            [ id:'test', single_end:false ], // meta map
-            file("${test_data_directory}/t1.nii.gz"),
-            file("${test_data_directory}/fa.nii.gz")
-    ]}
-
-    REGISTRATION_SYNTHREGISTRATION_T1FA ( input_t1fa )
-
+    REGISTRATION_SYNTHREGISTRATION ( input )
 }
