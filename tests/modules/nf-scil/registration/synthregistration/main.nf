@@ -16,7 +16,7 @@ workflow test_registration_synthregistration {
         [ id:'test', single_end:false ], // meta map
         file("${test_data_directory}/t1.nii.gz"),
         file("${test_data_directory}/fa.nii.gz"),
-        []
+        file("${test_data_directory}/license.txt")
 
     ]}
 

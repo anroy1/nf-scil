@@ -2,7 +2,7 @@ process REGISTRATION_SYNTHREGISTRATION {
     tag "$meta.id"
     label 'process_single'
 
-    container "freesurfer/freesurfer:7.4.1"
+    container "freesurfer/synthmorph:latest"
     containerOptions "--entrypoint ''"
 
     input:
@@ -11,8 +11,8 @@ process REGISTRATION_SYNTHREGISTRATION {
 
     output:
     tuple val(meta), path("*__output_warped.nii.gz"), emit: warped_image
-    tuple val(meta), path("*__deform_warp.nii.gz"), emit: deform_transform
-    tuple val (meta), path("*__init_warp.txt"), emit: init_transform
+    tuple val(meta), path("*__deform_warp.m3z"), emit: deform_transform
+    tuple val (meta), path("*__init_warp.lta"), emit: init_transform
     path "versions.yml"           , emit: versions
 
     when:
@@ -39,10 +39,8 @@ process REGISTRATION_SYNTHREGISTRATION {
     export OMP_NUM_THREADS=1
     export OPENBLAS_NUM_THREADS=1
 
-    mri_synthmorph $init -t ${prefix}__init_warp.txt $moving $fixed
-    mri_synthmorph $warp -i ${prefix}__init_warp.txt  -t temp.mgz -o ${prefix}__output_warped.nii.gz $moving $fixed
-
-    mri_warp_convert -g $moving --inras temp.mgz $out_format ${prefix}__deform_warp.nii.gz
+    mri_synthmorph $init -g -t ${prefix}__init_warp.lta $moving $fixed
+    mri_synthmorph $warp -g -i ${prefix}__init_warp.lta  -t ${prefix}__deform_warp.m3d -o ${prefix}__output_warped.nii.gz $moving $fixed
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
@@ -56,8 +54,6 @@ process REGISTRATION_SYNTHREGISTRATION {
 
     """
     mri_synthmorph -h
-
-    mri_warp_convert -h
 
     touch ${prefix}__output_warped.nii.gz
     touch ${prefix}__deform_warp.nii.gz
