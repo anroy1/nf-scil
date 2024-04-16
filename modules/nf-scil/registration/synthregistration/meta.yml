@@ -7,8 +7,8 @@ keywords:
   - MRI
 tools:
   - "Freesurfer":
-      description: "Freesurfer Toolbox"
-      homepage: "https://surfer.nmr.mgh.harvard.edu/"
+      description: "Freesurfer Synthmorph"
+      homepage: "https://martinos.org/malte/synthmorph/"
 
 
 input:
@@ -48,7 +48,7 @@ output:
   - deform_transform:
       type: file
       description: Deform transformation
-      pattern: "*.{m3z}"
+      pattern: "*.{nii,.nii.gz}"
 
   - warped_image:
       type: file

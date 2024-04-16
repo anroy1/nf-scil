@@ -11,7 +11,7 @@ process REGISTRATION_SYNTHREGISTRATION {
 
     output:
     tuple val(meta), path("*__output_warped.nii.gz"), emit: warped_image
-    tuple val(meta), path("*__deform_warp.m3z"), emit: deform_transform
+    tuple val(meta), path("*__deform_warp.nii.gz"), emit: deform_transform
     tuple val (meta), path("*__init_warp.lta"), emit: init_transform
     path "versions.yml"           , emit: versions
 
@@ -31,16 +31,13 @@ process REGISTRATION_SYNTHREGISTRATION {
     def extent = task.ext.extent ? "-e " + task.ext.extent : ""
     def weight = task.ext.weight ? "-w " + task.ext.weight : ""
 
-    //For arguments definition, mri_warp_convert -h
-    def out_format = task.ext.out_format ? "--out" + task.ext.out_format : "--outlps"
-
     """
     export ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS=1
     export OMP_NUM_THREADS=1
     export OPENBLAS_NUM_THREADS=1
 
     mri_synthmorph $init -g -t ${prefix}__init_warp.lta $moving $fixed
-    mri_synthmorph $warp -g -i ${prefix}__init_warp.lta  -t ${prefix}__deform_warp.m3d -o ${prefix}__output_warped.nii.gz $moving $fixed
+    mri_synthmorph $warp -g -i ${prefix}__init_warp.lta  -t ${prefix}__deform_warp.nii.gz -o ${prefix}__output_warped.nii.gz $moving $fixed
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

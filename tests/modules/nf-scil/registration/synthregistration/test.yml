@@ -1,11 +1,22 @@
 - name: registration synthregistration test_registration_synthregistration
   command: nextflow run ./tests/modules/nf-scil/registration/synthregistration -entry test_registration_synthregistration -c ./tests/config/nextflow.config
   tags:
-    - "registration"
-    - "registration/synthregistration"
+    - registration
+    - registration/synthregistration
   files:
-    - path: "output/registration/test.bam"
-      md5sum: e667c7caad0bc4b7ac383fd023c654fc
-    - path: "output/registration/versions.yml"
-      md5sum: a01fe51bc4c6a3a6226fbf77b2c7cf3b
-
+    - path: output/registration/test__deform_warp.nii.gz
+      md5sum: e0ed8084afa172668f50579f0585706c
+    - path: output/registration/test__init_warp.lta
+      md5sum: 4c5b29a64c8db1f87dd9ecf83a2d9878
+    - path: output/registration/test__output_warped.nii.gz
+      md5sum: 2b0441e95fd48bc269833d05831cfd9e
+    - path: output/registration/versions.yml
+    - path: output/testdata/test_data/freesurfer/anat_image.nii.gz
+      md5sum: ba57c629e9dc29204215dceac36d65ae
+    - path: output/testdata/test_data/freesurfer/fa.nii.gz
+      md5sum: 0e76e9378500de64d66ba3d787a147ca
+    - path: output/testdata/test_data/freesurfer/license.txt
+      md5sum: 3db0fa4e1860b4774c7855980e406275
+    - path: output/testdata/test_data/freesurfer/t1.nii.gz
+      md5sum: a6ade205420f594737ad67f9fb246f0f
+    - path: output/testdata/versions.yml
