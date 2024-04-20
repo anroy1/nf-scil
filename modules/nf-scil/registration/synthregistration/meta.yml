@@ -1,6 +1,6 @@
 ---
 name: "registration_synthregistration"
-description: Perform registration using SynthMorph from Freesurfer
+description: Perform registration using SynthMorph from Freesurfer. Output transforms in Freesurfer format .lta for affine and .mgz for deform, which can be converted for ANTs with respectively lta_convert and mri_warp_convert.
 keywords:
   - registration
   - Brain imaging
@@ -43,12 +43,12 @@ output:
   - init_transform:
       type: file
       description: Affine transform for initialization
-      pattern: "*.{lta}"
+      pattern: "*.{txt}"
 
   - deform_transform:
       type: file
       description: Deform transformation
-      pattern: "*.{nii,.nii.gz}"
+      pattern: "*.{mgz}"
 
   - warped_image:
       type: file
