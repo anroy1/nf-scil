@@ -10,7 +10,6 @@ tools:
       description: "Freesurfer Synthmorph"
       homepage: "https://martinos.org/malte/synthmorph/"
 
-
 input:
   - meta:
       type: map
