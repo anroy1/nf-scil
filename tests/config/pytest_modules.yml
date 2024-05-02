@@ -1,51 +1,71 @@
 image/resample:
   - modules/nf-scil/image/resample/**
   - tests/modules/nf-scil/image/resample/**
+
 preproc/gibbs:
   - modules/nf-scil/preproc/gibbs/**
   - tests/modules/nf-scil/preproc/gibbs/**
+
 preproc/n4:
   - modules/nf-scil/preproc/n4/**
   - tests/modules/nf-scil/preproc/n4/**
+
 preproc/normalize:
   - modules/nf-scil/preproc/normalize/**
   - tests/modules/nf-scil/preproc/normalize/**
+
 reconst/diffusivitypriors:
   - modules/nf-scil/reconst/diffusivitypriors/**
   - tests/modules/nf-scil/reconst/diffusivitypriors/**
+
 reconst/dtimetrics:
   - modules/nf-scil/reconst/dtimetrics/**
   - tests/modules/nf-scil/reconst/dtimetrics/**
+
 reconst/fodf:
   - modules/nf-scil/reconst/fodf/**
   - tests/modules/nf-scil/reconst/fodf/**
+
 reconst/frf:
   - modules/nf-scil/reconst/frf/**
   - tests/modules/nf-scil/reconst/frf/**
+
 reconst/meanfrf:
   - modules/nf-scil/reconst/meanfrf/**
   - tests/modules/nf-scil/reconst/meanfrf/**
+
 reconst/noddi:
   - modules/nf-scil/reconst/noddi/**
   - tests/modules/nf-scil/reconst/noddi/**
+
 segmentation/freesurferseg:
   - modules/nf-scil/segmentation/freesurferseg/**
   - tests/modules/nf-scil/segmentation/freesurferseg/**
+
 subworkflows/load_test_data:
   - subworkflows/nf-scil/load_test_data/**
   - tests/subworkflows/nf-scil/load_test_data/**
+
+subworkflows/preproc_t1_sf:
+  - subworkflows/nf-scil/preproc_t1_sf/**
+  - tests/subworkflows/nf-scil/preproc_t1_sf/**
+
 testdata/scilpy:
   - modules/nf-scil/testdata/scilpy/**
   - tests/modules/nf-scil/testdata/scilpy/**
+
 testdata/sizeof:
   - modules/nf-scil/testdata/sizeof/**
   - tests/modules/nf-scil/testdata/sizeof/**
+
 tracking/localtracking:
   - modules/nf-scil/tracking/localtracking/**
   - tests/modules/nf-scil/tracking/localtracking/**
+
 tracking/pfttracking:
   - modules/nf-scil/tracking/pfttracking/**
   - tests/modules/nf-scil/tracking/pfttracking/**
+
 utils/extractb0:
   - modules/nf-scil/utils/extractb0/**
   - tests/modules/nf-scil/utils/extractb0/**
