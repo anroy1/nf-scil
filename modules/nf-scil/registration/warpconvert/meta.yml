@@ -21,12 +21,12 @@ input:
   - affine:
       type: file
       description: Affine transform to convert. Default usage expects Freesurfer .lta format from mri_synthmorph
-      pattern: "*.{lta}"
+      pattern: "*.{lta,txt,fslmat,xfm,dat}"
 
   - deform:
       type: file
       description: Deform transform to convert. Default usage expects Freesurfer .mgz format from mri_synthmorph
-      pattern: "*.{mgz}"
+      pattern: "*.{nii,nii.gz,mgz,m3z}"
 
   - source:
       type: file
@@ -53,12 +53,12 @@ output:
   - deform_transform:
       type: file
       description: Deform transform. Default usage outputs ANTs (ITK) format .nii.gz
-      pattern: "*.{nii,nii.gz}"
+      pattern: "*.{nii,nii.gz,mgz,m3z}"
 
   - init_transform:
       type: file
       description: Init transform. Default usage outputs ANTs (ITK) format .txt
-      pattern: "*.{txt}"
+      pattern: "*.{txt,lta,mat,dat}"
 
   - versions:
       type: file

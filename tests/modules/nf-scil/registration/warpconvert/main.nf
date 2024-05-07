@@ -15,7 +15,7 @@ workflow test_registration_warpconvert {
         .map{ test_data_directory -> [
         [ id:'test', single_end:false ], // meta map
         file("${test_data_directory}/deform.nii.gz"),
-        file("${test_data_directory}/affine.nii.gz"),
+        file("${test_data_directory}/affine.lta"),
         file("${test_data_directory}/t1.nii.gz"),
         file("${test_data_directory}/fa.nii.gz"),
         file("${test_data_directory}/license.txt")
