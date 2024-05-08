@@ -24,19 +24,44 @@ process REGISTRATION_WARPCONVERT {
     def invert = task.ext.invert ? "--invert" : ""
     def source_geometry_init = "$source" ? "--src " + "$source" : ""
     def target_geometry_init = "$target" ? "--trg " + "$target" : ""
+    def in_format_init = task.ext.in_format_init ? "--in" + task.ext.in_format_deform : "--inlta " + "$affine"
     def out_format_init = task.ext.out_format_init ? "--out" + task.ext.out_format_init : "--outitk"
-    def format_ext_init = ["lta": ".lta","fsl": ".mat","mni": ".xfm","reg": ".dat","niftyreg": ".txt","itk": ".txt","vox": ".txt"]
 
     //For arguments definition, mri_warp_convert -h
     def source_geometry_deform = "$source" ? "--insrcgeom " + "$source" : ""
-    def in_format_deform = task.ext.in_format_deform ? "--in" + task.ext.in_format_deform : "--inras"
+    def in_format_deform = task.ext.in_format_deform ? "--in" + task.ext.in_format_deform : "--inras " + "$deform"
     def out_format_deform = task.ext.out_format_deform ? "--out" + task.ext.out_format_deform : "--outitk"
     def downsample = task.ext.downsample ? "--downsample" : ""
 
-
     """
-    lta_convert $invert $source_geometry_init $target_geometry_init $out_format_init ${prefix}__init_warp.\${ext_affine}
-    mri_warp_convert $source_geometry_deform $downsample $out_format_deform  ${prefix}__deform_warp.\${ext_deform}
+    export ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS=$task.cpus
+    export OMP_NUM_THREADS=1
+    export OPENBLAS_NUM_THREADS=1
+
+    echo $FREESURFER_HOME
+    ln -sf $fs_license \$FS_LICENSE/license.txt
+
+    declare -A affine_dictionnary=( ["--outlta"]="lta" \
+                                    ["--outfsl"]="mat" \
+                                    ["--outmni"]="xfm" \
+                                    ["--outreg"]="dat" \
+                                    ["--outniftyreg"]="txt" \
+                                    ["--outitk"]="txt" \
+                                    ["--outvox"]="txt" )
+
+    ext_affine=\${affine_dictionnary[${out_format_init}]}
+
+    declare -A deform_dictionnary=( ["--outm3z"]="m3z" \
+                                    ["--outfsl"]="nii.gz" \
+                                    ["--outlps"]="nii.gz" \
+                                    ["--outitk"]="nii.gz" \
+                                    ["--outras"]="nii.gz" \
+                                    ["--outvoz"]="mgz" )
+
+    ext_deform=\${deform_dictionnary[${out_format_deform}]}
+
+    lta_convert ${invert} ${source_geometry_init} ${target_geometry_init} ${in_format_init} ${out_format_init} ${prefix}__init_warp.\${ext_affine}
+    mri_warp_convert ${source_geometry_deform} ${downsample} ${in_format_deform} ${out_format_deform}  ${prefix}__deform_warp.\${ext_deform}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
