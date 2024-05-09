@@ -1,15 +1,16 @@
 - name: registration synthregistration test_registration_synthregistration
   command: nextflow run ./tests/modules/nf-scil/registration/synthregistration -entry test_registration_synthregistration -c ./tests/config/nextflow.config
   tags:
-    - registration
     - registration/synthregistration
+    - registration
   files:
-    - path: output/registration/test__deform_warp.nii.gz
-      md5sum: e0ed8084afa172668f50579f0585706c
+    - path: output/registration/test__deform_warp.mgz
+      contains:
+        - '# TODO nf-core: file md5sum was variable, please replace this text with a string found in the file instead '
     - path: output/registration/test__init_warp.lta
-      md5sum: 4c5b29a64c8db1f87dd9ecf83a2d9878
+      md5sum: 46ad5a5d359b2ec157d1164135e746eb
     - path: output/registration/test__output_warped.nii.gz
-      md5sum: 2b0441e95fd48bc269833d05831cfd9e
+      md5sum: bdc4ff1557093fd25a760e4db48d7d58
     - path: output/registration/versions.yml
     - path: output/testdata/test_data/freesurfer/anat_image.nii.gz
       md5sum: ba57c629e9dc29204215dceac36d65ae

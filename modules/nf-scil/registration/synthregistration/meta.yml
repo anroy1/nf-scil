@@ -27,11 +27,6 @@ input:
       description: Nifti volume fixed for registration
       pattern: "*.{nii,nii.gz}"
 
-  - fs_license:
-      type: file
-      description: The path to your FreeSurfer license. To get one, go to https://surfer.nmr.mgh.harvard.edu/registration.html. Optional. If you have already set your license as prescribed by Freesurfer (copied to a .license file in your $FREESURFER_HOME), this is not required.
-      pattern: "*.txt"
-
 output:
   - meta:
       type: map
