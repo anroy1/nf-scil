@@ -42,7 +42,7 @@ output:
   - deform_transform:
       type: file
       description: Deform transformation
-      pattern: "*.{mgz}"
+      pattern: "*.{nii.gz}"
 
   - warped_image:
       type: file
