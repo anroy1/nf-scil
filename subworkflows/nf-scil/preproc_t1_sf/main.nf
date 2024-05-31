@@ -10,7 +10,6 @@ workflow PREPROC_T1_SF {
 
     take:
         ch_image           // channel: [ val(meta), [ image ] ]
-        ch_fs_license      // channel: [ val(meta), [ fs_license ] ]      , optional
         ch_mask_nlmeans    // channel: [ val(meta), [ mask ] ]            , optional
         ch_ref_n4          // channel: [ val(meta), [ ref, ref_mask ] ]   , optional
         ch_ref_resample    // channel: [ val(meta), [ ref ] ]             , optional
@@ -30,7 +29,7 @@ workflow PREPROC_T1_SF {
         ch_versions = ch_versions.mix(PREPROC_N4.out.versions.first())
 
         // ** Resampling ** //
-        ch_resampling = PREPROC_N4.out.image.join(ch_ref_resample)
+        ch_resampling = PREPROC_N4.out.image
         IMAGE_RESAMPLE ( ch_resampling )
         ch_versions = ch_versions.mix(IMAGE_RESAMPLE.out.versions.first())
 
@@ -39,12 +38,12 @@ workflow PREPROC_T1_SF {
         BETCROP_SYNTHBET ( ch_bet )
         ch_versions = ch_versions.mix(BETCROP_SYNTHBET.out.versions.first())
 
-        // ** crop image ** //
+        // ** Crop image ** //
         ch_crop = BETCROP_SYNTHBET.out.t1.map{it + [[]]}
         BETCROP_CROPVOLUME_T1 ( ch_crop )
         ch_versions = ch_versions.mix(BETCROP_CROPVOLUME_T1.out.versions.first())
 
-        // ** crop mask ** //
+        // ** Crop mask ** //
         ch_crop_mask = BETCROP_SYNTHBET.out.mask.join(BETCROP_CROPVOLUME_T1.out.bounding_box)
         BETCROP_CROPVOLUME_MASK ( ch_crop_mask )
         ch_versions = ch_versions.mix(BETCROP_CROPVOLUME_MASK.out.versions.first())
