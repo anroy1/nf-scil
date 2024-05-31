@@ -39,7 +39,7 @@ process REGISTRATION_WARPCONVERT {
     export OPENBLAS_NUM_THREADS=1
 
     echo $FREESURFER_HOME
-    ln -sf $fs_license \$FS_LICENSE/license.txt
+    cp $fs_license \$FS_LICENSE/license.txt
 
     declare -A affine_dictionnary=( ["--outlta"]="lta" \
                                     ["--outfsl"]="mat" \
@@ -62,6 +62,8 @@ process REGISTRATION_WARPCONVERT {
 
     lta_convert ${invert} ${source_geometry_init} ${target_geometry_init} ${in_format_init} ${out_format_init} ${prefix}__init_warp.\${ext_affine}
     mri_warp_convert ${source_geometry_deform} ${downsample} ${in_format_deform} ${out_format_deform}  ${prefix}__deform_warp.\${ext_deform}
+
+    rm \$FS_LICENSE/license.txt
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
