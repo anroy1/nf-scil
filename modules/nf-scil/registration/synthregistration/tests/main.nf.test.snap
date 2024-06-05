@@ -1,73 +1,14 @@
 {
     "registration - synthregistration": {
         "content": [
-            {
-                "0": [
-                    [
-                        {
-                            "id": "test",
-                            "single_end": false
-                        },
-                        "test__output_warped.nii.gz:md5,28f54b497cda513feb86b07b0b28ac1d"
-                    ]
-                ],
-                "1": [
-                    [
-                        {
-                            "id": "test",
-                            "single_end": false
-                        },
-                        "test__deform_warp.nii.gz:md5,3cf3d49bc202410b8e6ef64ee394ad84"
-                    ]
-                ],
-                "2": [
-                    [
-                        {
-                            "id": "test",
-                            "single_end": false
-                        },
-                        "test__init_warp.lta:md5,46ad5a5d359b2ec157d1164135e746eb"
-                    ]
-                ],
-                "3": [
-                    "versions.yml:md5,49fb9c85da9f696926d1ab46ef0968fb"
-                ],
-                "deform_transform": [
-                    [
-                        {
-                            "id": "test",
-                            "single_end": false
-                        },
-                        "test__deform_warp.nii.gz:md5,3cf3d49bc202410b8e6ef64ee394ad84"
-                    ]
-                ],
-                "init_transform": [
-                    [
-                        {
-                            "id": "test",
-                            "single_end": false
-                        },
-                        "test__init_warp.lta:md5,46ad5a5d359b2ec157d1164135e746eb"
-                    ]
-                ],
-                "versions": [
-                    "versions.yml:md5,49fb9c85da9f696926d1ab46ef0968fb"
-                ],
-                "warped_image": [
-                    [
-                        {
-                            "id": "test",
-                            "single_end": false
-                        },
-                        "test__output_warped.nii.gz:md5,28f54b497cda513feb86b07b0b28ac1d"
-                    ]
-                ]
-            }
+            "test__output_warped.nii.gz",
+            "test__deform_warp.nii.gz",
+            "test__init_warp.lta"
         ],
         "meta": {
             "nf-test": "0.8.4",
             "nextflow": "23.10.1"
         },
-        "timestamp": "2024-06-05T18:41:40.417146"
+        "timestamp": "2024-06-05T19:55:15.170324"
     }
 }
