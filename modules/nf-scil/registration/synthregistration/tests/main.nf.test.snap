@@ -3,28 +3,64 @@
         "content": [
             {
                 "0": [
-                    
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test__output_warped.nii.gz:md5,972f5f538b606379b77b2e1cb92a37ca"
+                    ]
                 ],
                 "1": [
-                    
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test__deform_warp.nii.gz:md5,eea6ef9b84915d3475f21b5d2c5ef49d"
+                    ]
                 ],
                 "2": [
-                    
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test__init_warp.lta:md5,46ad5a5d359b2ec157d1164135e746eb"
+                    ]
                 ],
                 "3": [
-                    
+                    "versions.yml:md5,49fb9c85da9f696926d1ab46ef0968fb"
                 ],
                 "deform_transform": [
-                    
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test__deform_warp.nii.gz:md5,eea6ef9b84915d3475f21b5d2c5ef49d"
+                    ]
                 ],
                 "init_transform": [
-                    
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test__init_warp.lta:md5,46ad5a5d359b2ec157d1164135e746eb"
+                    ]
                 ],
                 "versions": [
-                    
+                    "versions.yml:md5,49fb9c85da9f696926d1ab46ef0968fb"
                 ],
                 "warped_image": [
-                    
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test__output_warped.nii.gz:md5,972f5f538b606379b77b2e1cb92a37ca"
+                    ]
                 ]
             }
         ],
@@ -32,6 +68,6 @@
             "nf-test": "0.8.4",
             "nextflow": "23.10.1"
         },
-        "timestamp": "2024-06-01T19:08:42.159111"
+        "timestamp": "2024-06-05T16:31:01.589627"
     }
 }
