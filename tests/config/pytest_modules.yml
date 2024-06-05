@@ -1,3 +1,0 @@
-registration/synthregistration:
-  - modules/nf-scil/registration/synthregistration/**
-  - tests/modules/nf-scil/registration/synthregistration/**
