@@ -44,7 +44,8 @@ nextflow_process {
                 { assert snapshot(
                     file(process.out.warped_image.get(0).get(1)).name,
                     file(process.out.deform_transform.get(0).get(1)).name,
-                    file(process.out.init_transform.get(0).get(1)).name
+                    file(process.out.init_transform.get(0).get(1)).name,
+                    process.out.versions
                 ).match() }
             )
         }

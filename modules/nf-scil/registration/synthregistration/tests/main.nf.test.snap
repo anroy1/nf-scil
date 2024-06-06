@@ -3,12 +3,15 @@
         "content": [
             "test__output_warped.nii.gz",
             "test__deform_warp.nii.gz",
-            "test__init_warp.lta"
+            "test__init_warp.lta",
+            [
+                "versions.yml:md5,49fb9c85da9f696926d1ab46ef0968fb"
+            ]
         ],
         "meta": {
             "nf-test": "0.8.4",
             "nextflow": "23.10.1"
         },
-        "timestamp": "2024-06-05T19:55:15.170324"
+        "timestamp": "2024-06-06T13:03:51.883573"
     }
 }
