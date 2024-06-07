@@ -1,0 +1,7 @@
+---
+name: "registration_warpconvert"
+channels:
+  - Docker
+  - Apptainer
+dependencies:
+  - "Freesurfer"

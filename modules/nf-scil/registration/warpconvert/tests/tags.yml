@@ -1,0 +1,2 @@
+registration/warpconvert:
+  - "modules/nf-scil/registration/warpconvert/**"

@@ -1,0 +1,86 @@
+nextflow_process {
+
+    name "Test Process REGISTRATION_WARPCONVERT"
+    script "../main.nf"
+    process "REGISTRATION_WARPCONVERT"
+
+    tag "modules"
+    tag "modules_nfcore"
+    tag "registration"
+    tag "registration/warpconvert"
+
+    tag "subworkflows"
+    tag "subworkflows/load_test_data"
+
+
+    setup {
+        run("LOAD_TEST_DATA", alias: "LOAD_DATA") {
+            script "../../../../../subworkflows/nf-scil/load_test_data/main.nf"
+            process {
+                """
+                input[0] = Channel.from( [ "freesurfer.zip" ] )
+                input[1] = "test.load-test-data"
+                """
+            }
+        }
+    }
+
+    test("registration - warpconvert - default") {
+
+        config "./nextflow_fsants.config"
+
+        when {
+            process {
+                """
+                input[0] = LOAD_DATA.out.test_data_directory.map{
+                    test_data_directory -> [
+                        [ id:'test', single_end:false ], // meta map
+                        file("/workspaces/nf-scil/deform.mgz"),
+                        file("/workspaces/nf-scil/affine.lta"),
+                        file("\${test_data_directory}/t1.nii.gz"),
+                        [],
+                        file("\${test_data_directory}/license.txt")
+                    ]
+                }
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+    }
+
+    test("registration - warpconvert - fsants") {
+
+        config "./nextflow_fsants.config"
+
+        when {
+            process {
+                """
+                input[0] = LOAD_DATA.out.test_data_directory.map{
+                    test_data_directory -> [
+                        [ id:'test', single_end:false ], // meta map
+                        file("/workspaces/nf-scil/deform.mgz"),
+                        file("/workspaces/nf-scil/affine.lta"),
+                        file("\${test_data_directory}/t1.nii.gz"),
+                        file("\${test_data_directory}/fa.nii.gz"),
+                        file("/workspaces/nf-scil/license.txt")
+                    ]
+                }
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+    }
+
+}

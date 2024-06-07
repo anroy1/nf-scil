@@ -24,12 +24,12 @@ process REGISTRATION_WARPCONVERT {
     def invert = task.ext.invert ? "--invert" : ""
     def source_geometry_init = "$source" ? "--src " + "$source" : ""
     def target_geometry_init = "$target" ? "--trg " + "$target" : ""
-    def in_format_init = task.ext.in_format_init ? "--in" + task.ext.in_format_deform : "--inlta " + "$affine"
+    def in_format_init = task.ext.in_format_init ? "--in" + task.ext.in_format_init + " " + "$affine" : "--inlta " + "$affine"
     def out_format_init = task.ext.out_format_init ? "--out" + task.ext.out_format_init : "--outitk"
 
     //For arguments definition, mri_warp_convert -h
     def source_geometry_deform = "$source" ? "--insrcgeom " + "$source" : ""
-    def in_format_deform = task.ext.in_format_deform ? "--in" + task.ext.in_format_deform : "--inras " + "$deform"
+    def in_format_deform = task.ext.in_format_deform ? "--in" + task.ext.in_format_deform + " " + "$deform" : "--inras " + "$deform"
     def out_format_deform = task.ext.out_format_deform ? "--out" + task.ext.out_format_deform : "--outitk"
     def downsample = task.ext.downsample ? "--downsample" : ""
 
@@ -38,8 +38,8 @@ process REGISTRATION_WARPCONVERT {
     export OMP_NUM_THREADS=1
     export OPENBLAS_NUM_THREADS=1
 
-    echo $FREESURFER_HOME
-    cp $fs_license \$FS_LICENSE/license.txt
+    echo \$FREESURFER_HOME
+    cp $fs_license \$FREESURFER_HOME/license.txt
 
     declare -A affine_dictionnary=( ["--outlta"]="lta" \
                                     ["--outfsl"]="mat" \
@@ -63,7 +63,7 @@ process REGISTRATION_WARPCONVERT {
     lta_convert ${invert} ${source_geometry_init} ${target_geometry_init} ${in_format_init} ${out_format_init} ${prefix}__init_warp.\${ext_affine}
     mri_warp_convert ${source_geometry_deform} ${downsample} ${in_format_deform} ${out_format_deform}  ${prefix}__deform_warp.\${ext_deform}
 
-    rm \$FS_LICENSE/license.txt
+    rm \$FREESURFER_HOME/license.txt
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

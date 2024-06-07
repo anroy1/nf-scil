@@ -1,0 +1,108 @@
+{
+    "registration - warpconvert - fsants": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test__init_warp.txt:md5,77b7540118a282f40c653b11eeeb5bd1"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test__deform_warp.nii.gz:md5,798ae9c709eb58bf0eb5013f23bcb913"
+                    ]
+                ],
+                "2": [
+                    "versions.yml:md5,2960624ce93ca37d3969a87aad502cfc"
+                ],
+                "deform_transform": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test__deform_warp.nii.gz:md5,798ae9c709eb58bf0eb5013f23bcb913"
+                    ]
+                ],
+                "init_transform": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test__init_warp.txt:md5,77b7540118a282f40c653b11eeeb5bd1"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,2960624ce93ca37d3969a87aad502cfc"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.8.4",
+            "nextflow": "23.10.1"
+        },
+        "timestamp": "2024-06-07T12:32:53.798876"
+    },
+    "registration - warpconvert - default": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test__init_warp.txt:md5,77b7540118a282f40c653b11eeeb5bd1"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test__deform_warp.nii.gz:md5,798ae9c709eb58bf0eb5013f23bcb913"
+                    ]
+                ],
+                "2": [
+                    "versions.yml:md5,2960624ce93ca37d3969a87aad502cfc"
+                ],
+                "deform_transform": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test__deform_warp.nii.gz:md5,798ae9c709eb58bf0eb5013f23bcb913"
+                    ]
+                ],
+                "init_transform": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test__init_warp.txt:md5,77b7540118a282f40c653b11eeeb5bd1"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,2960624ce93ca37d3969a87aad502cfc"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.8.4",
+            "nextflow": "23.10.1"
+        },
+        "timestamp": "2024-06-07T12:32:33.937568"
+    }
+}
