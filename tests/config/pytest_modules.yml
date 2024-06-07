@@ -1,3 +1,0 @@
-registration/warpconvert:
-  - modules/nf-scil/registration/warpconvert/**
-  - tests/modules/nf-scil/registration/warpconvert/**
