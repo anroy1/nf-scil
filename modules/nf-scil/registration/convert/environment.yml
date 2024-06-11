@@ -1,5 +1,5 @@
 ---
-name: "registration_warpconvert"
+name: "registration_convert"
 channels:
   - Docker
   - Apptainer

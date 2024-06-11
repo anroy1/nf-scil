@@ -1,13 +1,13 @@
 nextflow_process {
 
-    name "Test Process REGISTRATION_WARPCONVERT"
+    name "Test Process REGISTRATION_CONVERT"
     script "../main.nf"
-    process "REGISTRATION_WARPCONVERT"
+    process "REGISTRATION_CONVERT"
 
     tag "modules"
     tag "modules_nfcore"
     tag "registration"
-    tag "registration/warpconvert"
+    tag "registration/convert"
 
     tag "subworkflows"
     tag "subworkflows/load_test_data"
@@ -25,7 +25,7 @@ nextflow_process {
         }
     }
 
-    test("registration - warpconvert - default") {
+    test("registration - convert - default") {
 
         config "./nextflow_fsants.config"
 
@@ -54,7 +54,7 @@ nextflow_process {
         }
     }
 
-    test("registration - warpconvert - fsants") {
+    test("registration - convert - fsants") {
 
         config "./nextflow_fsants.config"
 

@@ -1,4 +1,4 @@
-process REGISTRATION_WARPCONVERT {
+process REGISTRATION_CONVERT {
     tag "$meta.id"
     label 'process_single'
 
@@ -38,7 +38,6 @@ process REGISTRATION_WARPCONVERT {
     export OMP_NUM_THREADS=1
     export OPENBLAS_NUM_THREADS=1
 
-    echo \$FREESURFER_HOME
     cp $fs_license \$FREESURFER_HOME/license.txt
 
     declare -A affine_dictionnary=( ["--outlta"]="lta" \

@@ -1,5 +1,5 @@
 ---
-name: "registration_warpconvert"
+name: "registration_convert"
 description: Freesurfer transform conversion tool. Default usage is aim at receiving freesurfer format and converting to ANTs (ITK). See lta_convert --help and mri_warp_convert --help for alternatives.
 keywords:
   - Registration
