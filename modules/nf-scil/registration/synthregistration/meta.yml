@@ -37,7 +37,7 @@ output:
   - init_transform:
       type: file
       description: Affine transform for initialization
-      pattern: "*.{txt}"
+      pattern: "*.{lta}"
 
   - deform_transform:
       type: file
