@@ -1,6 +1,6 @@
 ---
 name: "registration_synthregistration"
-description: Perform registration using SynthMorph from Freesurfer. Output transforms in Freesurfer format .lta for affine and .mgz for deform, which can be converted for ANTs with respectively lta_convert and mri_warp_convert.
+description: Perform registration using SynthMorph from Freesurfer. Outputs transforms in Freesurfer format .lta for affine and .nii.gz (synthmorph also supports .mgz) for deform, both in RAS orientation, which can be converted for ANTs with respectively lta_convert and mri_warp_convert, which support a wide range of conversion formats and orientations. Conversion can be processed using the registration/convert module which can be used successively to this one.
 keywords:
   - registration
   - Brain imaging
