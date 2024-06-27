@@ -6,7 +6,7 @@ process REGISTRATION_CONVERT {
     containerOptions "--entrypoint ''"
 
     input:
-    tuple val(meta), path(deform), path(affine), path(source) /* optional, value = [] */, path(target) /* optional, value = [] */, path(fs_license) /* optional, value = [] */
+    tuple val(meta), path(deform), path(affine), path(source), path(target) /* optional, value = [] */, path(fs_license) /* optional, value = [] */
 
     output:
     tuple val(meta), path("*.{txt,lta,mat,dat}"), emit: init_transform
