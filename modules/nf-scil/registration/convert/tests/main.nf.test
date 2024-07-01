@@ -27,7 +27,7 @@ nextflow_process {
 
     test("registration - convert - default") {
 
-        config "./nextflow_fsants.config"
+        config "./nextflow_default.config"
 
         when {
             process {
@@ -35,8 +35,8 @@ nextflow_process {
                 input[0] = LOAD_DATA.out.test_data_directory.map{
                     test_data_directory -> [
                         [ id:'test', single_end:false ], // meta map
-                        file("/workspaces/nf-scil/deform.mgz"),
-                        file("/workspaces/nf-scil/affine.lta"),
+                        file("/workspaces/nf-scil/fs_deform.nii.gz"),
+                        file("/workspaces/nf-scil/fs_affine.lta"),
                         file("\${test_data_directory}/t1.nii.gz"),
                         [],
                         file("\${test_data_directory}/license.txt")
@@ -64,11 +64,64 @@ nextflow_process {
                 input[0] = LOAD_DATA.out.test_data_directory.map{
                     test_data_directory -> [
                         [ id:'test', single_end:false ], // meta map
-                        file("/workspaces/nf-scil/deform.mgz"),
-                        file("/workspaces/nf-scil/affine.lta"),
+                        file("/workspaces/nf-scil/fs_deform.nii.gz"),
+                        file("/workspaces/nf-scil/fs_affine.lta"),
                         file("\${test_data_directory}/t1.nii.gz"),
                         file("\${test_data_directory}/fa.nii.gz"),
-                        file("/workspaces/nf-scil/license.txt")
+                        file("\${test_data_directory}/license.txt")
+                    ]
+                }
+                """
+            }
+        }
+    }
+
+    // FSL output not fully implemented in mri_warp_convert
+
+    // test("registration - convert - fsfsl") {
+
+    //     config "./nextflow_fsfsl.config"
+
+    //     when {
+    //         process {
+    //             """
+    //             input[0] = LOAD_DATA.out.test_data_directory.map{
+    //                 test_data_directory -> [
+    //                     [ id:'test', single_end:false ], // meta map
+    //                     file("/workspaces/nf-scil/fs_deform.nii.gz"),
+    //                     file("/workspaces/nf-scil/fs_affine.lta"),
+    //                     file("\${test_data_directory}/t1.nii.gz"),
+    //                     file("\${test_data_directory}/fa.nii.gz"),
+    //                     file("/workspaces/nf-scil/license.txt")
+    //                 ]
+    //             }
+    //             """
+    //         }
+    //     }
+
+    //     then {
+    //         assertAll(
+    //             { assert process.success },
+    //             { assert snapshot(process.out).match() }
+    //         )
+    //     }
+    // }
+
+    test("registration - convert - fslfs") {
+
+        config "./nextflow_fslfs.config"
+
+        when {
+            process {
+                """
+                input[0] = LOAD_DATA.out.test_data_directory.map{
+                    test_data_directory -> [
+                        [ id:'test', single_end:false ], // meta map
+                        file("/workspaces/nf-scil/fsl_deform.nii.gz"),
+                        file("/workspaces/nf-scil/fsl_affine.mat"),
+                        file("\${test_data_directory}/t1.nii.gz"),
+                        file("\${test_data_directory}/fa.nii.gz"),
+                        file("\${test_data_directory}/license.txt")
                     ]
                 }
                 """
@@ -83,4 +136,121 @@ nextflow_process {
         }
     }
 
+    test("registration - convert - fslants") {
+
+        config "./nextflow_fslants.config"
+
+        when {
+            process {
+                """
+                input[0] = LOAD_DATA.out.test_data_directory.map{
+                    test_data_directory -> [
+                        [ id:'test', single_end:false ], // meta map
+                        file("/workspaces/nf-scil/fsl_deform.nii.gz"),
+                        file("/workspaces/nf-scil/fsl_affine.mat"),
+                        file("\${test_data_directory}/t1.nii.gz"),
+                        file("\${test_data_directory}/fa.nii.gz"),
+                        file("\${test_data_directory}/license.txt")
+                    ]
+                }
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+    }
+
+    test("registration - convert - antsfs") {
+
+        config "./nextflow_antsfs.config"
+
+        when {
+            process {
+                """
+                input[0] = LOAD_DATA.out.test_data_directory.map{
+                    test_data_directory -> [
+                        [ id:'test', single_end:false ], // meta map
+                        file("/workspaces/nf-scil/ants_deform.nii.gz"),
+                        file("/workspaces/nf-scil/ants_affine.txt"),
+                        file("\${test_data_directory}/t1.nii.gz"),
+                        file("\${test_data_directory}/fa.nii.gz"),
+                        file("\${test_data_directory}/license.txt")
+                    ]
+                }
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+    }
+
+test("registration - convert - fslants") {
+
+        config "./nextflow_fslants.config"
+
+        when {
+            process {
+                """
+                input[0] = LOAD_DATA.out.test_data_directory.map{
+                    test_data_directory -> [
+                        [ id:'test', single_end:false ], // meta map
+                        file("/workspaces/nf-scil/fsl_deform.nii.gz"),
+                        file("/workspaces/nf-scil/fsl_affine.mat"),
+                        file("\${test_data_directory}/t1.nii.gz"),
+                        file("\${test_data_directory}/fa.nii.gz"),
+                        file("\${test_data_directory}/license.txt")
+                    ]
+                }
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
+        }
+    }
+
+    // FSL output not fully implemented in mri_warp_convert
+
+    // test("registration - convert - antsfsl") {
+
+    //     config "./nextflow_antsfsl.config"
+
+    //     when {
+    //         process {
+    //             """
+    //             input[0] = LOAD_DATA.out.test_data_directory.map{
+    //                 test_data_directory -> [
+    //                     [ id:'test', single_end:false ], // meta map
+    //                     file("/workspaces/nf-scil/ants_deform.nii.gz"),
+    //                     file("/workspaces/nf-scil/ants_affine.txt"),
+    //                     file("\${test_data_directory}/t1.nii.gz"),
+    //                     file("\${test_data_directory}/fa.nii.gz"),
+    //                     file("/workspaces/nf-scil/license.txt")
+    //                 ]
+    //             }
+    //             """
+    //         }
+    //     }
+
+    //     then {
+    //         assertAll(
+    //             { assert process.success },
+    //             { assert snapshot(process.out).match() }
+    //         )
+    //     }
+    // }
 }

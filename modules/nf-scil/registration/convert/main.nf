@@ -38,6 +38,8 @@ process REGISTRATION_CONVERT {
     export OMP_NUM_THREADS=1
     export OPENBLAS_NUM_THREADS=1
 
+    FSLOUTPUTTYPE=NIFTI_GZ
+
     cp $fs_license \$FREESURFER_HOME/license.txt
 
     declare -A affine_dictionnary=( ["--outlta"]="lta" \
@@ -55,7 +57,7 @@ process REGISTRATION_CONVERT {
                                     ["--outlps"]="nii.gz" \
                                     ["--outitk"]="nii.gz" \
                                     ["--outras"]="nii.gz" \
-                                    ["--outvoz"]="mgz" )
+                                    ["--outvox"]="mgz" )
 
     ext_deform=\${deform_dictionnary[${out_format_deform}]}
 
