@@ -3,6 +3,7 @@ include { DENOISING_NLMEANS } from '../../../modules/nf-scil/denoising/nlmeans/m
 include { PREPROC_N4 } from '../../../modules/nf-scil/preproc/n4/main'
 include { IMAGE_RESAMPLE } from '../../../modules/nf-scil/image/resample/main'
 include { BETCROP_ANTSBET } from '../../../modules/nf-scil/betcrop/antsbet/main'
+include { BETCROP_SYNTHBET} from '../../../modules/nf-scil/betcrop/synthbet/main'
 include { BETCROP_CROPVOLUME as BETCROP_CROPVOLUME_T1 } from '../../../modules/nf-scil/betcrop/cropvolume/main'
 include { BETCROP_CROPVOLUME as BETCROP_CROPVOLUME_MASK } from '../../../modules/nf-scil/betcrop/cropvolume/main'
 
@@ -10,11 +11,12 @@ workflow PREPROC_T1 {
 
     take:
         ch_image           // channel: [ val(meta), [ image ] ]
-        ch_template        // channel: [ val(meta), [ template ] ]
-        ch_probability_map // channel: [ val(meta), [ probability_map ] ]
+        ch_template        // channel: [ val(meta), [ template ] ]        , optional
+        ch_probability_map // channel: [ val(meta), [ probability_map ] ] , optional
         ch_mask_nlmeans    // channel: [ val(meta), [ mask ] ]            , optional
         ch_ref_n4          // channel: [ val(meta), [ ref, ref_mask ] ]   , optional
         ch_ref_resample    // channel: [ val(meta), [ ref ] ]             , optional
+        val_synth(false)   // value: (default: false)
 
     main:
 
@@ -36,9 +38,17 @@ workflow PREPROC_T1 {
         ch_versions = ch_versions.mix(IMAGE_RESAMPLE.out.versions.first())
 
         // ** Brain extraction ** //
-        ch_bet = IMAGE_RESAMPLE.out.image.join(ch_template).join(ch_probability_map)
-        BETCROP_ANTSBET ( ch_bet )
-        ch_versions = ch_versions.mix(BETCROP_ANTSBET.out.versions.first())
+        if ( val_synth ) {
+            ch_bet = IMAGE_RESAMPLE.out.image.join(ch_fs_license)
+            BETCROP_SYNTHBET ( ch_bet )
+            ch_versions = ch_versions.mix(BETCROP_SYNTHBET.out.versions.first())
+        }
+
+        else {
+            ch_bet = IMAGE_RESAMPLE.out.image.join(ch_template).join(ch_probability_map)
+            BETCROP_ANTSBET ( ch_bet )
+            ch_versions = ch_versions.mix(BETCROP_ANTSBET.out.versions.first())
+        }
 
         // ** crop image ** //
         ch_crop = BETCROP_ANTSBET.out.t1.map{it + [[]]}
@@ -54,10 +64,10 @@ workflow PREPROC_T1 {
         image_nlmeans   = DENOISING_NLMEANS.out.image         // channel: [ val(meta), [ image ] ]
         image_N4        = PREPROC_N4.out.image                // channel: [ val(meta), [ image ] ]
         image_resample  = IMAGE_RESAMPLE.out.image            // channel: [ val(meta), [ image ] ]
-        image_bet       = BETCROP_ANTSBET.out.t1              // channel: [ val(meta), [ t1 ] ]
-        mask_bet        = BETCROP_ANTSBET.out.mask            // channel: [ val(meta), [ mask ] ]
+        image_bet       = ch_bet_out.t1                       // channel: [ val(meta), [ t1 ] ]
+        mask_bet        = ch_bet_out.out.mask                 // channel: [ val(meta), [ mask ] ]
         crop_box        = BETCROP_CROPVOLUME_T1.out.bounding_box // channel: [ val(meta), [ bounding_box ] ]
         mask_final      = BETCROP_CROPVOLUME_MASK.out.image   // channel: [ val(meta), [ mask ] ]
-        t1_final        = BETCROP_CROPVOLUME_T1.out.image        // channel: [ val(meta), [ image ] ]
+        t1_final        = BETCROP_CROPVOLUME_T1.out.image     // channel: [ val(meta), [ image ] ]
         versions        = ch_versions                         // channel: [ versions.yml ]
 }

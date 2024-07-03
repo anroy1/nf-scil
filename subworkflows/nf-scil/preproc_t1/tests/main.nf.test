@@ -12,6 +12,7 @@ nextflow_workflow {
     tag "preproc/n4"
     tag "image/resample"
     tag "betcrop/antsbet"
+    tag "betcrop/synthbet"
     tag "betcrop/cropvolume"
 
     tag "load_test_data"
@@ -123,6 +124,61 @@ nextflow_workflow {
                         [ id:'test', single_end:false ],
                         file("\${test_data_directory}/t1_unaligned.nii.gz")
                     ]}
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success},
+                { assert snapshot(workflow.out).match()}
+            )
+        }
+    }
+
+test("preproc_t1_synth") {
+        config "./nextflow_synth.config"
+
+        when {
+            workflow {
+                """
+                ch_split_test_data = LOAD_DATA.out.test_data_directory
+                    .branch{
+                        antsbet: it.simpleName == "antsbet"
+                        others: it.simpleName == "others"
+                    }
+                input[0] = ch_split_test_data.antsbet.map{
+                    test_data_directory -> [
+                        [ id:'test', single_end:false ],
+                        file("\${test_data_directory}/t1_unaligned.nii.gz")
+                    ]}
+                input[1] = ch_split_test_data.antsbet.map{
+                    test_data_directory -> [
+                        [ id:'test', single_end:false ],
+                        []
+                    ]}
+                input[2] = ch_split_test_data.antsbet.map{
+                    test_data_directory -> [
+                        [ id:'test', single_end:false ],
+                        []
+                    ]}
+                input[3] = ch_split_test_data.antsbet.map{
+                    test_data_directory -> [
+                        [ id:'test', single_end:false ],
+                        []
+                    ]}
+                input[4] = ch_split_test_data.others.map{
+                    test_data_directory -> [
+                        [ id:'test', single_end:false ],
+                        [],
+                        []
+                    ]}
+                input[5] = ch_split_test_data.antsbet.map{
+                    test_data_directory -> [
+                        [ id:'test', single_end:false ],
+                        []
+                    ]}
+                input[6] = true
                 """
             }
         }
