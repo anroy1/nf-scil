@@ -1,6 +1,6 @@
 ---
 name: "registration_easyreg"
-description: Image registration and gray matter segmentation with easyreg from freesurfer
+description: Image registration and SynthSeg v2 segmentation with easyreg from freesurfer
 keywords:
   - nifti
   - registration
