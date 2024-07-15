@@ -4,9 +4,8 @@ process REGISTRATION_EASYREG {
     tag "$meta.id"
     label 'process_single'
 
-    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://scil.usherbrooke.ca/containers/scilus_2.0.2.sif':
-        'scilus/scilus:2.0.2' }"
+    container "freesurfer/synthstrip:latest"
+    containerOptions "--entrypoint ''"
 
     input:
     tuple val(meta), path(reference), path(floating), path(ref_segmentation), path(flo_segmentation)
@@ -25,27 +24,27 @@ process REGISTRATION_EASYREG {
 
     script:
     def prefix = task.ext.prefix ?: "${meta.id}"
+    def field = task.ext.field ? "--fwd_field ${prefix}_forward_field.nii.gz --bak_field ${prefix}_backward_field.nii.gz " : ""
     def threads = task.ext.threads ? "--threads " + task.ext.threads : ""
     def affine = task.ext.affine ? "--affine_only " : ""
 
     """
     if [[ -f "$ref_segmentation" ]];
     then
-        reference_segmentation = $ref_segmentation
+        reference_segmentation=$ref_segmentation
     else
-        reference_segmentation = ${prefix}_reference_segmentation.nii.gz
+        reference_segmentation="${prefix}_reference_segmentation.nii.gz"
     fi
 
         if [[ -f "$flo_segmentation" ]];
     then
-        floating_segmentation = $flo_segmentation
+        floating_segmentation=$flo_segmentation
     else
-        floating_segmentation = ${prefix}_floating_segmentation.nii.gz
+        floating_segmentation="${prefix}_floating_segmentation.nii.gz"
     fi
 
     mri_easyreg --ref $reference --flo $floating --ref_seg \${reference_segmentation} --flo_seg --ref_seg \${reference_segmentation} \
-        --flo_reg ${prefix}_floating_registered.nii.gz --ref_reg ${prefix}_reference_registered.nii.gz --fwd_field ${prefix}_forward_field.nii.gz \
-        --bak_field ${prefix}_backward_field.nii.gz $threads $affine
+        --flo_reg ${prefix}_floating_registered.nii.gz --ref_reg ${prefix}_reference_registered.nii.gz $field $threads $affine
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
