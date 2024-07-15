@@ -26,20 +26,18 @@ input:
 
   - floating:
       type: file
-      description:  the floating image in .nii(.gz) or .mgz format.
+      description: the floating image in .nii(.gz) or .mgz format.
       pattern: "*.{nii,nii.gz,mgz}"
 
   - ref_segmentation:
       type: file
-      description:
-        file with the SynthSeg v2 (non-robust) segmentation + parcellation of the reference image.
+      description: file with the SynthSeg v2 (non-robust) segmentation + parcellation of the reference image.
         If it does not exist, EasyReg will create it. If it already exists (e.g., from a previous EasyReg run), then EasyReg will read it from disk (which is faster than segmenting).
       pattern: "*.{nii,nii.gz}"
 
   - flo_segmentation:
       type: file
-      description:
-        file with the SynthSeg v2 (non-robust) segmentation + parcellation of the floating image.
+      description: file with the SynthSeg v2 (non-robust) segmentation + parcellation of the floating image.
         If it does not exist, EasyReg will create it. If it already exists (e.g., from a previous EasyReg run), then EasyReg will read it from disk (which is faster than segmenting).
       pattern: "*.{nii,nii.gz}"
 
