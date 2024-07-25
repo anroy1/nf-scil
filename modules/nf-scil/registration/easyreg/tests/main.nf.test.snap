@@ -3,46 +3,118 @@
         "content": [
             {
                 "0": [
-                    
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test_reference_segmentation.nii.gz:md5,aeac0f1cf19381a7f40464408dc6b9e9"
+                    ]
                 ],
                 "1": [
-                    
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test_floating_segmentation.nii.gz:md5,c895e33807532642f197806b230aaa79"
+                    ]
                 ],
                 "2": [
-                    
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test_reference_registered.nii.gz:md5,cfaa3b3c6d30d25ef0b8dd5c6ecce0e4"
+                    ]
                 ],
                 "3": [
-                    
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test_floating_registered.nii.gz:md5,817e5d3913acdfe1176889ee8566f714"
+                    ]
                 ],
                 "4": [
-                    
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test_forward_field.nii.gz:md5,76e3ffa48bf6ba1b97d7e782e20686b8"
+                    ]
                 ],
                 "5": [
-                    
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test_backward_field.nii.gz:md5,99b2624aecaa1d0fe3e0633eab433344"
+                    ]
                 ],
                 "6": [
-                    
+                    "versions.yml:md5,4661210880c42a986923e8257f64c760"
                 ],
                 "bak_field": [
-                    
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test_backward_field.nii.gz:md5,99b2624aecaa1d0fe3e0633eab433344"
+                    ]
                 ],
                 "flo_reg": [
-                    
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test_floating_registered.nii.gz:md5,817e5d3913acdfe1176889ee8566f714"
+                    ]
                 ],
                 "flo_seg": [
-                    
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test_floating_segmentation.nii.gz:md5,c895e33807532642f197806b230aaa79"
+                    ]
                 ],
                 "fwd_field": [
-                    
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test_forward_field.nii.gz:md5,76e3ffa48bf6ba1b97d7e782e20686b8"
+                    ]
                 ],
                 "ref_reg": [
-                    
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test_reference_registered.nii.gz:md5,cfaa3b3c6d30d25ef0b8dd5c6ecce0e4"
+                    ]
                 ],
                 "ref_seg": [
-                    
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test_reference_segmentation.nii.gz:md5,aeac0f1cf19381a7f40464408dc6b9e9"
+                    ]
                 ],
                 "versions": [
-                    
+                    "versions.yml:md5,4661210880c42a986923e8257f64c760"
                 ]
             }
         ],
@@ -50,6 +122,6 @@
             "nf-test": "0.9.0-rc1",
             "nextflow": "24.04.3"
         },
-        "timestamp": "2024-07-12T20:08:25.376075"
+        "timestamp": "2024-07-25T20:31:22.056733"
     }
 }

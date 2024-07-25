@@ -4,20 +4,19 @@ process REGISTRATION_EASYREG {
     tag "$meta.id"
     label 'process_single'
 
-    container "freesurfer/synthstrip:latest"
-    containerOptions "--entrypoint ''"
+    container "freesurfer/freesurfer:7.4.1"
 
     input:
     tuple val(meta), path(reference), path(floating), path(ref_segmentation), path(flo_segmentation)
 
     output:
-    tuple val(meta), path("${prefix}_reference_segmentation.nii.gz") , emit: ref_seg
-    tuple val(meta), path("${prefix}_floating_segmentation.nii.gz")  , emit: flo_seg
-    tuple val(meta), path("${prefix}_reference_registered.nii.gz")   , emit: ref_reg
-    tuple val(meta), path("${prefix}_floating_registered.nii.gz")    , emit: flo_reg
-    tuple val(meta), path("${prefix}_forward_field.nii.gz")          , emit: fwd_field
-    tuple val(meta), path("${prefix}_backward_field.nii.gz")         , emit: bak_field
-    path "versions.yml"                                              , emit: versions
+    tuple val(meta), path("*_reference_segmentation.nii.gz") , emit: ref_seg
+    tuple val(meta), path("*_floating_segmentation.nii.gz")  , emit: flo_seg
+    tuple val(meta), path("*_reference_registered.nii.gz")   , emit: ref_reg
+    tuple val(meta), path("*_floating_registered.nii.gz")    , emit: flo_reg
+    tuple val(meta), path("*_forward_field.nii.gz")          , emit: fwd_field, optional: true
+    tuple val(meta), path("*_backward_field.nii.gz")         , emit: bak_field, optional: true
+    path "versions.yml"                                      , emit: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -43,12 +42,12 @@ process REGISTRATION_EASYREG {
         floating_segmentation="${prefix}_floating_segmentation.nii.gz"
     fi
 
-    mri_easyreg --ref $reference --flo $floating --ref_seg \${reference_segmentation} --flo_seg --ref_seg \${reference_segmentation} \
+    mri_easyreg --ref $reference --flo $floating --ref_seg \${reference_segmentation} --flo_seg \${floating_segmentation} \
         --flo_reg ${prefix}_floating_registered.nii.gz --ref_reg ${prefix}_reference_registered.nii.gz $field $threads $affine
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        freesurfer: 7.4
+        freesurfer: 7.4.1
     END_VERSIONS
     """
 
@@ -67,7 +66,7 @@ process REGISTRATION_EASYREG {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        freesurfer: 7.4
+        freesurfer: 7.4.1
     END_VERSIONS
     """
 }
