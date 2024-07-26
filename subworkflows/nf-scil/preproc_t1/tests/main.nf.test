@@ -70,6 +70,7 @@ nextflow_workflow {
                         [ id:'test', single_end:false ],
                         []
                     ]}
+                input[6] = false
                 """
             }
         }
@@ -124,6 +125,7 @@ nextflow_workflow {
                         [ id:'test', single_end:false ],
                         file("\${test_data_directory}/t1_unaligned.nii.gz")
                     ]}
+                input[6] = false
                 """
             }
         }

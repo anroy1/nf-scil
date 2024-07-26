@@ -16,7 +16,7 @@ workflow PREPROC_T1 {
         ch_mask_nlmeans    // channel: [ val(meta), [ mask ] ]            , optional
         ch_ref_n4          // channel: [ val(meta), [ ref, ref_mask ] ]   , optional
         ch_ref_resample    // channel: [ val(meta), [ ref ] ]             , optional
-        val_synth(false)   // value: (default: false)
+        val_synth(false)   // value: (default: false),                    , optional
 
     main:
 
@@ -42,6 +42,10 @@ workflow PREPROC_T1 {
             ch_bet = IMAGE_RESAMPLE.out.image
             BETCROP_SYNTHBET ( ch_bet )
             ch_versions = ch_versions.mix(BETCROP_SYNTHBET.out.versions.first())
+
+            // ** Setting BET output ** //
+            image_bet = BETCROP_SYNTHBET.out.bet_image
+            mask_bet = BETCROP_SYNTHBET.out.brain_mask
         }
 
         else {
@@ -50,15 +54,19 @@ workflow PREPROC_T1 {
             ch_bet = IMAGE_RESAMPLE.out.image.join(ch_template).join(ch_probability_map)
             BETCROP_ANTSBET ( ch_bet )
             ch_versions = ch_versions.mix(BETCROP_ANTSBET.out.versions.first())
+
+            // ** Setting BET output ** //
+            image_bet = BETCROP_ANTSBET.out.t1
+            mask_bet = BETCROP_ANTSBET.out.mask
         }
 
         // ** crop image ** //
-        ch_crop = BETCROP_ANTSBET.out.t1.map{it + [[]]}
+        ch_crop = image_bet.map{it + [[]]}
         BETCROP_CROPVOLUME_T1 ( ch_crop )
         ch_versions = ch_versions.mix(BETCROP_CROPVOLUME_T1.out.versions.first())
 
         // ** crop mask ** //
-        ch_crop_mask = BETCROP_ANTSBET.out.mask.join(BETCROP_CROPVOLUME_T1.out.bounding_box)
+        ch_crop_mask = mask_bet.join(BETCROP_CROPVOLUME_T1.out.bounding_box)
         BETCROP_CROPVOLUME_MASK ( ch_crop_mask )
         ch_versions = ch_versions.mix(BETCROP_CROPVOLUME_MASK.out.versions.first())
 
@@ -66,8 +74,8 @@ workflow PREPROC_T1 {
         image_nlmeans   = DENOISING_NLMEANS.out.image         // channel: [ val(meta), [ image ] ]
         image_N4        = PREPROC_N4.out.image                // channel: [ val(meta), [ image ] ]
         image_resample  = IMAGE_RESAMPLE.out.image            // channel: [ val(meta), [ image ] ]
-        image_bet       = ch_bet_out.t1                       // channel: [ val(meta), [ t1 ] ]
-        mask_bet        = ch_bet_out.out.mask                 // channel: [ val(meta), [ mask ] ]
+        image_bet       = image_bet                      // channel: [ val(meta), [ t1 ] ]
+        mask_bet        = mask_bet              // channel: [ val(meta), [ mask ] ]
         crop_box        = BETCROP_CROPVOLUME_T1.out.bounding_box // channel: [ val(meta), [ bounding_box ] ]
         mask_final      = BETCROP_CROPVOLUME_MASK.out.image   // channel: [ val(meta), [ mask ] ]
         t1_final        = BETCROP_CROPVOLUME_T1.out.image     // channel: [ val(meta), [ image ] ]

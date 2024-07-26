@@ -165,10 +165,115 @@
             }
         ],
         "meta": {
-            "nf-test": "0.8.4",
-            "nextflow": "23.10.1"
+            "nf-test": "0.9.0-rc1",
+            "nextflow": "24.04.3"
         },
-        "timestamp": "2024-05-10T19:57:38.341812"
+        "timestamp": "2024-07-26T18:11:30.464682"
+    },
+    "preproc_t1_synth": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test_denoised.nii.gz:md5,b6d25b37b1101fea5c77bbbc711757c3"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test__image_n4.nii.gz:md5,ef0d9af46aa1e330c5d7679ead500596"
+                    ]
+                ],
+                "2": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test__resampled.nii.gz:md5,88bae6bfeea1734111621b437e09548d"
+                    ]
+                ],
+                "3": [
+                    
+                ],
+                "4": [
+                    
+                ],
+                "5": [
+                    
+                ],
+                "6": [
+                    
+                ],
+                "7": [
+                    
+                ],
+                "8": [
+                    "versions.yml:md5,97b6b9457caf964b9f20549672f692f0",
+                    "versions.yml:md5,b979132991d8f72a3585465533bd5730",
+                    "versions.yml:md5,c6563545d67d7ab20ad849adcaafcb71"
+                ],
+                "crop_box": [
+                    
+                ],
+                "image_N4": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test__image_n4.nii.gz:md5,ef0d9af46aa1e330c5d7679ead500596"
+                    ]
+                ],
+                "image_bet": [
+                    
+                ],
+                "image_nlmeans": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test_denoised.nii.gz:md5,b6d25b37b1101fea5c77bbbc711757c3"
+                    ]
+                ],
+                "image_resample": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test__resampled.nii.gz:md5,88bae6bfeea1734111621b437e09548d"
+                    ]
+                ],
+                "mask_bet": [
+                    
+                ],
+                "mask_final": [
+                    
+                ],
+                "t1_final": [
+                    
+                ],
+                "versions": [
+                    "versions.yml:md5,97b6b9457caf964b9f20549672f692f0",
+                    "versions.yml:md5,b979132991d8f72a3585465533bd5730",
+                    "versions.yml:md5,c6563545d67d7ab20ad849adcaafcb71"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.0-rc1",
+            "nextflow": "24.04.3"
+        },
+        "timestamp": "2024-07-26T17:13:02.031243"
     },
     "preproc_t1_classic": {
         "content": [
@@ -336,9 +441,9 @@
             }
         ],
         "meta": {
-            "nf-test": "0.8.4",
-            "nextflow": "23.10.1"
+            "nf-test": "0.9.0-rc1",
+            "nextflow": "24.04.3"
         },
-        "timestamp": "2024-05-10T19:36:04.155481"
+        "timestamp": "2024-07-26T17:51:34.909311"
     }
 }
