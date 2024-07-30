@@ -168,7 +168,7 @@
             "nf-test": "0.9.0-rc1",
             "nextflow": "24.04.3"
         },
-        "timestamp": "2024-07-26T18:11:30.464682"
+        "timestamp": "2024-07-30T20:24:23.951944"
     },
     "preproc_t1_synth": {
         "content": [
@@ -201,27 +201,66 @@
                     ]
                 ],
                 "3": [
-                    
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test__bet_image.nii.gz:md5,80bf67681166f331e8495f359461b9d4"
+                    ]
                 ],
                 "4": [
-                    
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test__brain_mask.nii.gz:md5,df69d549d6919584a0f7b36113994296"
+                    ]
                 ],
                 "5": [
-                    
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test_t1_cropped_bbox.pkl:md5,fb2114f56d82f5f4465f6b204a8298eb"
+                    ]
                 ],
                 "6": [
-                    
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test_cropped.nii.gz:md5,8fdb13e81f76139351c7b1056aebf1ed"
+                    ]
                 ],
                 "7": [
-                    
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test_t1_cropped.nii.gz:md5,6cd92a7c908816a47ae4146bfc6571c7"
+                    ]
                 ],
                 "8": [
+                    "versions.yml:md5,2c0a6f978891003ebdf35c1ba060aa90",
+                    "versions.yml:md5,6aecd5fc2de479eaa81fb30b248c647c",
                     "versions.yml:md5,97b6b9457caf964b9f20549672f692f0",
+                    "versions.yml:md5,9d515db259af59f33ccd14061fbc45d1",
                     "versions.yml:md5,b979132991d8f72a3585465533bd5730",
                     "versions.yml:md5,c6563545d67d7ab20ad849adcaafcb71"
                 ],
                 "crop_box": [
-                    
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test_t1_cropped_bbox.pkl:md5,fb2114f56d82f5f4465f6b204a8298eb"
+                    ]
                 ],
                 "image_N4": [
                     [
@@ -233,7 +272,13 @@
                     ]
                 ],
                 "image_bet": [
-                    
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test__bet_image.nii.gz:md5,80bf67681166f331e8495f359461b9d4"
+                    ]
                 ],
                 "image_nlmeans": [
                     [
@@ -254,16 +299,37 @@
                     ]
                 ],
                 "mask_bet": [
-                    
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test__brain_mask.nii.gz:md5,df69d549d6919584a0f7b36113994296"
+                    ]
                 ],
                 "mask_final": [
-                    
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test_cropped.nii.gz:md5,8fdb13e81f76139351c7b1056aebf1ed"
+                    ]
                 ],
                 "t1_final": [
-                    
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test_t1_cropped.nii.gz:md5,6cd92a7c908816a47ae4146bfc6571c7"
+                    ]
                 ],
                 "versions": [
+                    "versions.yml:md5,2c0a6f978891003ebdf35c1ba060aa90",
+                    "versions.yml:md5,6aecd5fc2de479eaa81fb30b248c647c",
                     "versions.yml:md5,97b6b9457caf964b9f20549672f692f0",
+                    "versions.yml:md5,9d515db259af59f33ccd14061fbc45d1",
                     "versions.yml:md5,b979132991d8f72a3585465533bd5730",
                     "versions.yml:md5,c6563545d67d7ab20ad849adcaafcb71"
                 ]
@@ -273,7 +339,7 @@
             "nf-test": "0.9.0-rc1",
             "nextflow": "24.04.3"
         },
-        "timestamp": "2024-07-26T17:13:02.031243"
+        "timestamp": "2024-07-30T19:21:50.686836"
     },
     "preproc_t1_classic": {
         "content": [
@@ -444,6 +510,6 @@
             "nf-test": "0.9.0-rc1",
             "nextflow": "24.04.3"
         },
-        "timestamp": "2024-07-26T17:51:34.909311"
+        "timestamp": "2024-07-30T20:05:33.018053"
     }
 }

@@ -16,7 +16,9 @@ workflow PREPROC_T1 {
         ch_mask_nlmeans    // channel: [ val(meta), [ mask ] ]            , optional
         ch_ref_n4          // channel: [ val(meta), [ ref, ref_mask ] ]   , optional
         ch_ref_resample    // channel: [ val(meta), [ ref ] ]             , optional
-        val_synth(false)   // value: (default: false),                    , optional
+        ch_weights         // channel: [ val(meta), [ weights ] ]         , optional
+
+        val_synth(false)   // value: (default: false)                     , optional
 
     main:
 
@@ -39,7 +41,7 @@ workflow PREPROC_T1 {
 
         // ** Brain extraction ** //
         if ( val_synth ) {
-            ch_bet = IMAGE_RESAMPLE.out.image
+            ch_bet = IMAGE_RESAMPLE.out.image.join(ch_weights)
             BETCROP_SYNTHBET ( ch_bet )
             ch_versions = ch_versions.mix(BETCROP_SYNTHBET.out.versions.first())
 
@@ -71,13 +73,13 @@ workflow PREPROC_T1 {
         ch_versions = ch_versions.mix(BETCROP_CROPVOLUME_MASK.out.versions.first())
 
     emit:
-        image_nlmeans   = DENOISING_NLMEANS.out.image         // channel: [ val(meta), [ image ] ]
-        image_N4        = PREPROC_N4.out.image                // channel: [ val(meta), [ image ] ]
-        image_resample  = IMAGE_RESAMPLE.out.image            // channel: [ val(meta), [ image ] ]
-        image_bet       = image_bet                      // channel: [ val(meta), [ t1 ] ]
-        mask_bet        = mask_bet              // channel: [ val(meta), [ mask ] ]
+        image_nlmeans   = DENOISING_NLMEANS.out.image            // channel: [ val(meta), [ image ] ]
+        image_N4        = PREPROC_N4.out.image                   // channel: [ val(meta), [ image ] ]
+        image_resample  = IMAGE_RESAMPLE.out.image               // channel: [ val(meta), [ image ] ]
+        image_bet       = image_bet                              // channel: [ val(meta), [ t1 ] ]
+        mask_bet        = mask_bet                               // channel: [ val(meta), [ mask ] ]
         crop_box        = BETCROP_CROPVOLUME_T1.out.bounding_box // channel: [ val(meta), [ bounding_box ] ]
-        mask_final      = BETCROP_CROPVOLUME_MASK.out.image   // channel: [ val(meta), [ mask ] ]
-        t1_final        = BETCROP_CROPVOLUME_T1.out.image     // channel: [ val(meta), [ image ] ]
-        versions        = ch_versions                         // channel: [ versions.yml ]
+        mask_final      = BETCROP_CROPVOLUME_MASK.out.image      // channel: [ val(meta), [ mask ] ]
+        t1_final        = BETCROP_CROPVOLUME_T1.out.image        // channel: [ val(meta), [ image ] ]
+        versions        = ch_versions                            // channel: [ versions.yml ]
 }
