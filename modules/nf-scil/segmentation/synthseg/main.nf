@@ -6,10 +6,9 @@ process SEGMENTATION_SYNTHSEG {
     containerOptions "--entrypoint ''"
 
     input:
-    tuple val(meta), path(image)
+    tuple val(meta), path(image), path(lesion)
 
     output:
-    // TODO nf-core: Named file extensions MUST be emitted for ALL output channels
     tuple val(meta), path("*.bam"), emit: bam
     // TODO nf-core: List additional required output channels/values here
     path "versions.yml"           , emit: versions
@@ -26,16 +25,36 @@ process SEGMENTATION_SYNTHSEG {
     def robust = task.ext.robust ? "--robust" : ""
     def fast = task.ext.fast ? "--fast" : ""
     def ct = task.ext.ct ? "--ct" : ""
-
+    //TODO add all the others parameter with the corresponding optional outputs
 
     """
-    samtools \\
-        sort \\
-        $args \\
-        -@ $task.cpus \\
-        -o ${prefix}.bam \\
-        -T $prefix \\
-        $bam
+    export ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS=1
+    export OMP_NUM_THREADS=1
+    export OPENBLAS_NUM_THREADS=1
+
+    mri_synthseg --i $image --o t1.nii.gz $--threads 1 gpu $parc $robust $fast $ct
+
+    # WM Mask
+    mri_binarize --i t1.nii.gz \
+                --match 2 7 12 16 28 41 46 49 51 60 \
+                --o ${prefix}__mask_wm.ni.gz
+
+    # GM Mask
+    mri_binarize --i t1.nii.gz \
+                --match 3 8 11 17 18 26 42 47 50 \
+                --o ${prefix}__mask_wm.ni.gz
+
+    # CSF Mask
+    mri_binarize --i t1.nii.gz \
+                --match 4 5 14 15 24 43 44 \
+                --o ${prefix}__mask_wm.ni.gz
+
+    if [[ -f "$lesion" ]];
+    then
+        mri_binarize --i ${prefix}__mask_wm.ni.gz --union $lesion --o ${prefix}__mask_wm.ni.gz
+    fi
+
+    mri_convert --i ${prefix}__mask_wm.ni.gz --out_data_type uchar --o ${prefix}__mask_wm.ni.gz
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
