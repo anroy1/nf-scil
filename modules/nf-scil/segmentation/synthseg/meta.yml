@@ -1,55 +1,63 @@
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/nf-core/modules/master/modules/meta-schema.json
+
 name: "segmentation_synthseg"
-## TODO nf-core: Add a description of the module and list keywords
-description: write your description here
+description: Perform Brain Tissues Segmentation using Freesurfer synthseg on a T1 image. Optionally, a binary mask of lesion can be add to correct the white matter mask.
 keywords:
-  - sort
-  - example
-  - genomics
+  - Segmentation
+  - T1
+  - Tissues
 tools:
-  - "segmentation":
-      ## TODO nf-core: Add a description and other details for the software below
-      description: ""
-      homepage: ""
-      documentation: ""
-      tool_dev_url: ""
-      doi: ""
-      licence: 
+  - "Freesurfer":
+      description: "An open source neuroimaging toolkit for processing, analyzing, and visualizing human brain MR images."
+      homepage: "https://surfer.nmr.mgh.harvard.edu/"
 
-## TODO nf-core: Add a description of all of the variables used as input
 input:
-  # Only when we have meta
   - meta:
       type: map
       description: |
         Groovy Map containing sample information
         e.g. `[ id:'sample1', single_end:false ]`
-  
-  ## TODO nf-core: Delete / customise this example input
-  - bam:
-      type: file
-      description: Sorted BAM/CRAM/SAM file
-      pattern: "*.{bam,cram,sam}"
 
-## TODO nf-core: Add a description of all of the variables used as output
+  - image:
+      type: file
+      description: Nifti T1 volume to segment into tissue maps.
+      pattern: "*.{nii,nii.gz}"
+
+  - lesion:
+      type: file
+      description: Nifti lesion volume to correct the white matter with a lesion mask. The lesion mask must be a binary mask.
+      pattern: "*.{nii,nii.gz}"
+
+  - fs_license:
+      type: file
+      description: The path to your FreeSurfer license. To get one, go to https://surfer.nmr.mgh.harvard.edu/registration.html. Optional. If you have already set your license as prescribed by Freesurfer (copied to a .license file in your $FREESURFER_HOME), this is not required.
+      pattern: "*.txt"
+
 output:
-  #Only when we have meta
   - meta:
       type: map
       description: |
         Groovy Map containing sample information
         e.g. `[ id:'sample1', single_end:false ]`
-  
+
+  - wm_mask:
+      type: file
+      description: Nifti WM mask volume.
+      pattern: "*.{nii,nii.gz}"
+
+  - gm_mask:
+      type: file
+      description: Nifti GM mask volume.
+      pattern: "*.{nii,nii.gz}"
+
+  - csf_mask:
+      type: file
+      description: Nifti CSF mask volume.
+      pattern: "*.{nii,nii.gz}"
+
   - versions:
       type: file
       description: File containing software versions
       pattern: "versions.yml"
-  ## TODO nf-core: Delete / customise this example output
-  - bam:
-      type: file
-      description: Sorted BAM/CRAM/SAM file
-      pattern: "*.{bam,cram,sam}"
 
 authors:
   - "@anroy1"
