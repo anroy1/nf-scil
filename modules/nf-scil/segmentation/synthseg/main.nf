@@ -6,13 +6,13 @@ process SEGMENTATION_SYNTHSEG {
     containerOptions "--entrypoint ''"
 
     input:
-    tuple val(meta), path(image), path(lesion) /* optional, value = [] */, path(fs_license) /* optional, value = [] */
+    tuple val(meta), path(image), path(lesion) /* optional, input = [] */, path(fs_license) /* optional, input = [] */
 
     output:
     tuple val(meta), path("*__mask_wm.nii.gz")                , emit: wm_mask
     tuple val(meta), path("*__mask_gm.nii.gz")                , emit: gm_mask
     tuple val(meta), path("*__mask_csf.nii.gz")               , emit: csf_mask
-    path "versions.yml"                                     , emit: versions
+    path "versions.yml"                                       , emit: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -72,8 +72,15 @@ process SEGMENTATION_SYNTHSEG {
     stub:
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
+
     """
-    touch ${prefix}.bam
+    mri_synthseg -h
+    mri_binarize -h
+    mri_convert -h
+
+    touch ${prefix}__mask_wm.nii.gz
+    touch ${prefix}__mask_gm.nii.gz
+    touch ${prefix}__mask_csf.nii.gz
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
