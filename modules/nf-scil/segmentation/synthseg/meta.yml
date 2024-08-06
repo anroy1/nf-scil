@@ -1,4 +1,3 @@
-
 name: "segmentation_synthseg"
 description: Perform Brain Tissues Segmentation using Freesurfer synthseg on a T1 image. Optionally, a binary mask of lesion can be add to correct the white matter mask.
 keywords:
