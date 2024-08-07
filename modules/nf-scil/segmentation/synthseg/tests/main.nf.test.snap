@@ -1,5 +1,118 @@
 {
-    "segmentation - synthseg": {
+    "segmentation - synthseg - options": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test__mask_wm.nii.gz:md5,8ca305b46341552159e15e6974274358"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test__mask_gm.nii.gz:md5,c8c4f3027132011d98cf4a351230f519"
+                    ]
+                ],
+                "2": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test__mask_csf.nii.gz:md5,1deff8b0b3d9f883b75bcd5c9f52f2c5"
+                    ]
+                ],
+                "3": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test__vol.csv:md5,fe0078439655e81ab5777c73b4bd1edf"
+                    ]
+                ],
+                "4": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test__qc.csv:md5,ede51ac9221945293200793a46c15afa"
+                    ]
+                ],
+                "5": [
+                    
+                ],
+                "6": [
+                    "versions.yml:md5,b65418e9ce2ab1cce590b1f659e18c1d"
+                ],
+                "csf_mask": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test__mask_csf.nii.gz:md5,1deff8b0b3d9f883b75bcd5c9f52f2c5"
+                    ]
+                ],
+                "gm_mask": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test__mask_gm.nii.gz:md5,c8c4f3027132011d98cf4a351230f519"
+                    ]
+                ],
+                "qc": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test__qc.csv:md5,ede51ac9221945293200793a46c15afa"
+                    ]
+                ],
+                "resample": [
+                    
+                ],
+                "versions": [
+                    "versions.yml:md5,b65418e9ce2ab1cce590b1f659e18c1d"
+                ],
+                "vol": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test__vol.csv:md5,fe0078439655e81ab5777c73b4bd1edf"
+                    ]
+                ],
+                "wm_mask": [
+                    [
+                        {
+                            "id": "test",
+                            "single_end": false
+                        },
+                        "test__mask_wm.nii.gz:md5,8ca305b46341552159e15e6974274358"
+                    ]
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.0-rc1",
+            "nextflow": "24.04.4"
+        },
+        "timestamp": "2024-08-07T20:11:56.005332"
+    },
+    "segmentation - synthseg - basic": {
         "content": [
             {
                 "0": [
@@ -26,10 +139,19 @@
                             "id": "test",
                             "single_end": false
                         },
-                        "test__mask_csf.nii.gz:md5,e60ff1b5847502a1e3f8c4a590d4a73c"
+                        "test__mask_csf.nii.gz:md5,1307c8aeae9064d9a5108a01e918ffba"
                     ]
                 ],
                 "3": [
+                    
+                ],
+                "4": [
+                    
+                ],
+                "5": [
+                    
+                ],
+                "6": [
                     "versions.yml:md5,b65418e9ce2ab1cce590b1f659e18c1d"
                 ],
                 "csf_mask": [
@@ -38,7 +160,7 @@
                             "id": "test",
                             "single_end": false
                         },
-                        "test__mask_csf.nii.gz:md5,e60ff1b5847502a1e3f8c4a590d4a73c"
+                        "test__mask_csf.nii.gz:md5,1307c8aeae9064d9a5108a01e918ffba"
                     ]
                 ],
                 "gm_mask": [
@@ -50,8 +172,17 @@
                         "test__mask_gm.nii.gz:md5,432d6a28a10823c0ca5b2f40d2353e2f"
                     ]
                 ],
+                "qc": [
+                    
+                ],
+                "resample": [
+                    
+                ],
                 "versions": [
                     "versions.yml:md5,b65418e9ce2ab1cce590b1f659e18c1d"
+                ],
+                "vol": [
+                    
                 ],
                 "wm_mask": [
                     [
@@ -68,6 +199,6 @@
             "nf-test": "0.9.0-rc1",
             "nextflow": "24.04.4"
         },
-        "timestamp": "2024-08-06T19:27:40.416183"
+        "timestamp": "2024-08-07T20:11:18.859041"
     }
 }

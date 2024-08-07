@@ -53,6 +53,21 @@ output:
       description: Nifti CSF mask volume.
       pattern: "*.{nii,nii.gz}"
 
+  - vol:
+      type: file
+      description: (optional) Output CSV file with volumes for all structures and subjects.
+      pattern: "*.csv"
+
+  - qc:
+      type: file
+      description: (optional) Output CSV file with qc scores for all subjects.
+      pattern: "*.csv"
+
+  - resample:
+      type: file
+      description: (optional) in order to return segmentations at 1mm resolution, the input images are internally resampled (except if they already are at 1mm). Use this optional flag to save the resampled images. This must be the same type as --i.
+      pattern: "*.{nii,nii.gz}"
+
   - versions:
       type: file
       description: File containing software versions

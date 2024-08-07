@@ -12,6 +12,9 @@ process SEGMENTATION_SYNTHSEG {
     tuple val(meta), path("*__mask_wm.nii.gz")                , emit: wm_mask
     tuple val(meta), path("*__mask_gm.nii.gz")                , emit: gm_mask
     tuple val(meta), path("*__mask_csf.nii.gz")               , emit: csf_mask
+    tuple val(meta), path("*__vol.csv")                       , emit: vol, optional: true
+    tuple val(meta), path("*__qc.csv")                        , emit: qc, optional: true
+    tuple val(meta), path("*__resampled_image.nii.gz")        , emit: resample, optional: true
     path "versions.yml"                                       , emit: versions
 
     when:
@@ -26,7 +29,10 @@ process SEGMENTATION_SYNTHSEG {
     def robust = task.ext.robust ? "--robust" : ""
     def fast = task.ext.fast ? "--fast" : ""
     def ct = task.ext.ct ? "--ct" : ""
-    //TODO add all the others parameter with the corresponding optional outputs
+    def output_vol = task.ext.output_vol ?  "--vol ${prefix}__vol.csv" : ""
+    def output_qc = task.ext.output_qc ?  "--qc ${prefix}__qc.csv" : ""
+    def output_resample = task.ext.output_resample ? "--resample ${prefix}__resampled_image.nii.gz": ""
+    def crop = task.ext.crop ? "--crop " + task.ext.crop: ""
 
     """
     export ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS=1
@@ -35,7 +41,7 @@ process SEGMENTATION_SYNTHSEG {
 
     cp $fs_license \$FREESURFER_HOME/license.txt
 
-    mri_synthseg --i $image --o t1.nii.gz --threads 1 $gpu $parc $robust $fast $ct
+    mri_synthseg --i $image --threads $task.cpus --o t1.nii.gz $gpu $parc $robust $fast $ct $output_vol $output_qc $output_resample $crop
 
     # WM Mask
     mri_binarize --i t1.nii.gz \

@@ -24,7 +24,7 @@ nextflow_process {
         }
     }
 
-    test("segmentation - synthseg") {
+    test("segmentation - synthseg - basic") {
         config "./nextflow_basic.config"
         when {
             process {
@@ -35,7 +35,6 @@ nextflow_process {
                         file("\${test_data_directory}/t1.nii.gz", checkIfExists: true,),
                         [],
                         file("\${test_data_directory}/license.txt", checkIfExists: true,)
-
                     ]
                 }
                 """
@@ -51,8 +50,33 @@ nextflow_process {
         }
     }
 
+    test("segmentation - synthseg - options") {
+        config "./nextflow_options.config"
+        when {
+            process {
+                """
+                input[0] = LOAD_DATA.out.test_data_directory.map{
+                    test_data_directory -> [
+                        [ id:'test', single_end:false ], // meta map
+                        file("\${test_data_directory}/t1.nii.gz", checkIfExists: true,),
+                        [],
+                        file("\${test_data_directory}/license.txt", checkIfExists: true,)
+                    ]
+                }
+                """
+            }
+        }
 
-    // test("segmentation - synthseg") {
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+
+            )
+        }
+    }
+
+    // test("segmentation - synthseg - lesion") {
     //     config "./nextflow_lesion.config"
     //     when {
     //         process {
