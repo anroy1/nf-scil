@@ -42,9 +42,9 @@ nextflow_process {
             assertAll(
                 { assert process.success },
                 { assert snapshot(
-                    file(process.out.warped_image.get(0).get(1)).name,
-                    file(process.out.deform_transform.get(0).get(1)).name,
-                    file(process.out.init_transform.get(0).get(1)).name,
+                    Nifti_md5sum(process.out.warped_image.get(0).get(1)),
+                    Nifti_md5sum(process.out.deform_transform.get(0).get(1)),
+                    file(process.out.init_transform.get(0).get(1)),
                     process.out.versions
                 ).match() }
             )
