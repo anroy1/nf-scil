@@ -44,8 +44,12 @@ nextflow_process {
         then {
             assertAll(
                 { assert process.success },
-                { assert snapshot(process.out).match() }
-
+                { assert snapshot(
+                    Nifti_md5sum(process.out.wm_mask.get(0).get(1)),
+                    Nifti_md5sum(process.out.gm_mask.get(0).get(1)),
+                    Nifti_md5sum(process.out.csf_mask.get(0).get(1)),
+                    process.out.versions
+                ).match() }
             )
         }
     }
@@ -70,8 +74,15 @@ nextflow_process {
         then {
             assertAll(
                 { assert process.success },
-                { assert snapshot(process.out).match() }
-
+                { assert snapshot(
+                    Nifti_md5sum(process.out.wm_mask.get(0).get(1)),
+                    Nifti_md5sum(process.out.gm_mask.get(0).get(1)),
+                    Nifti_md5sum(process.out.csf_mask.get(0).get(1)),
+                    file(process.out.vol.get(0).get(1)),
+                    file(process.out.qc.get(0).get(1)),
+                    // Nifti_md5sum(process.out.resample.get(0).get(1)),
+                    process.out.versions
+                ).match() }
             )
         }
     }
