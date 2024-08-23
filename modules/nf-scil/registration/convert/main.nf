@@ -39,6 +39,7 @@ process REGISTRATION_CONVERT {
     export OPENBLAS_NUM_THREADS=1
 
     FSLOUTPUTTYPE=NIFTI_GZ
+    echo \$FSLOUTPUTTYPE
 
     cp $fs_license \$FREESURFER_HOME/license.txt
 

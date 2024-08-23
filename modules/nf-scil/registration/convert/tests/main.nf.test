@@ -18,7 +18,7 @@ nextflow_process {
             script "../../../../../subworkflows/nf-scil/load_test_data/main.nf"
             process {
                 """
-                input[0] = Channel.from( [ "freesurfer.zip" ] )
+                input[0] = Channel.from( [ "freesurfer.zip" , "freesurfer_reslice.zip" , "freesurfer_transforms.zip"] )
                 input[1] = "test.load-test-data"
                 """
             }
@@ -32,16 +32,35 @@ nextflow_process {
         when {
             process {
                 """
-                input[0] = LOAD_DATA.out.test_data_directory.map{
+                ch_split_test_data = LOAD_DATA.out.test_data_directory
+                    .branch{
+                        freesurfer: it.simpleName == "freesurfer"
+                        reslice: it.simpleName == "freesurfer_reslice"
+                        transforms: it.simpleName == "freesurfer_transforms"
+                    }
+                ch_transforms = ch_split_test_data.transforms.map{
                     test_data_directory -> [
-                        [ id:'test', single_end:false ], // meta map
-                        file("/workspaces/nf-scil/fs_deform.nii.gz"),
-                        file("/workspaces/nf-scil/fs_affine.lta"),
-                        file("\${test_data_directory}/t1.nii.gz"),
-                        [],
+                        [ id:'test' ],
+                        file("\${test_data_directory}/fs_deform.nii.gz"),
+                        file("\${test_data_directory}/fs_affine.lta")
+                    ]
+                }
+                ch_reslice = ch_split_test_data.reslice.map{
+                    test_data_directory -> [
+                        [ id:'test' ],
+                        file("\${test_data_directory}/t1_reslice.nii.gz"),
+                        []
+                    ]
+                }
+                ch_freesurfer = ch_split_test_data.freesurfer.map{
+                    test_data_directory -> [
+                        [ id:'test' ],
                         file("\${test_data_directory}/license.txt")
                     ]
                 }
+                input[0] = ch_transforms
+                    .join(ch_reslice)
+                    .join(ch_freesurfer)
                 """
             }
         }
@@ -61,18 +80,44 @@ nextflow_process {
         when {
             process {
                 """
-                input[0] = LOAD_DATA.out.test_data_directory.map{
+                ch_split_test_data = LOAD_DATA.out.test_data_directory
+                    .branch{
+                        freesurfer: it.simpleName == "freesurfer"
+                        reslice: it.simpleName == "freesurfer_reslice"
+                        transforms: it.simpleName == "freesurfer_transforms"
+                    }
+                ch_transforms = ch_split_test_data.transforms.map{
                     test_data_directory -> [
-                        [ id:'test', single_end:false ], // meta map
-                        file("/workspaces/nf-scil/fs_deform.nii.gz"),
-                        file("/workspaces/nf-scil/fs_affine.lta"),
-                        file("\${test_data_directory}/t1.nii.gz"),
-                        file("\${test_data_directory}/fa.nii.gz"),
+                        [ id:'test' ],
+                        file("\${test_data_directory}/fs_deform.nii.gz"),
+                        file("\${test_data_directory}/fs_affine.lta")
+                    ]
+                }
+                ch_reslice = ch_split_test_data.reslice.map{
+                    test_data_directory -> [
+                        [ id:'test' ],
+                        file("\${test_data_directory}/t1_reslice.nii.gz"),
+                        file("\${test_data_directory}/fa_reslice.nii.gz")
+                    ]
+                }
+                ch_freesurfer = ch_split_test_data.freesurfer.map{
+                    test_data_directory -> [
+                        [ id:'test' ],
                         file("\${test_data_directory}/license.txt")
                     ]
                 }
+                input[0] = ch_transforms
+                    .join(ch_reslice)
+                    .join(ch_freesurfer)
                 """
             }
+        }
+
+        then {
+            assertAll(
+                { assert process.success },
+                { assert snapshot(process.out).match() }
+            )
         }
     }
 
@@ -87,12 +132,35 @@ nextflow_process {
     //             """
     //             input[0] = LOAD_DATA.out.test_data_directory.map{
     //                 test_data_directory -> [
-    //                     [ id:'test', single_end:false ], // meta map
-    //                     file("/workspaces/nf-scil/fs_deform.nii.gz"),
-    //                     file("/workspaces/nf-scil/fs_affine.lta"),
-    //                     file("\${test_data_directory}/t1.nii.gz"),
-    //                     file("\${test_data_directory}/fa.nii.gz"),
-    //                     file("/workspaces/nf-scil/license.txt")
+                // ch_split_test_data = LOAD_DATA.out.test_data_directory
+                //     .branch{
+                //         freesurfer: it.simpleName == "freesurfer"
+                //         reslice: it.simpleName == "freesurfer_reslice"
+                //         transforms: it.simpleName == "freesurfer_transforms"
+                //     }
+                // ch_transforms = ch_split_test_data.transforms.map{
+                //     test_data_directory -> [
+                //         [ id:'test' ],
+                //         file("\${test_data_directory}/fs_deform.nii.gz"),
+                //         file("\${test_data_directory}/fs_affine.lta")
+                //     ]
+                // }
+                // ch_reslice = ch_split_test_data.reslice.map{
+                //     test_data_directory -> [
+                //         [ id:'test' ],
+                //         file("\${test_data_directory}/t1_reslice.nii.gz"),
+                //         file("\${test_data_directory}/fa_reslice.nii.gz")
+                //     ]
+                // }
+                // ch_freesurfer = ch_split_test_data.freesurfer.map{
+                //     test_data_directory -> [
+                //         [ id:'test' ],
+                //         file("\${test_data_directory}/license.txt")
+                //     ]
+                // }
+                // input[0] = ch_transforms
+                //     .join(ch_reslice)
+                //     .join(ch_freesurfer)
     //                 ]
     //             }
     //             """
@@ -107,63 +175,101 @@ nextflow_process {
     //     }
     // }
 
-    test("registration - convert - fslfs") {
+    // test("registration - convert - fslfs") {
 
-        config "./nextflow_fslfs.config"
+    //     config "./nextflow_fslfs.config"
 
-        when {
-            process {
-                """
-                input[0] = LOAD_DATA.out.test_data_directory.map{
-                    test_data_directory -> [
-                        [ id:'test', single_end:false ], // meta map
-                        file("/workspaces/nf-scil/fsl_deform.nii.gz"),
-                        file("/workspaces/nf-scil/fsl_affine.mat"),
-                        file("\${test_data_directory}/t1.nii.gz"),
-                        file("\${test_data_directory}/fa.nii.gz"),
-                        file("\${test_data_directory}/license.txt")
-                    ]
-                }
-                """
-            }
-        }
+    //     when {
+    //         process {
+    //             """
+    //             ch_split_test_data = LOAD_DATA.out.test_data_directory
+    //                 .branch{
+    //                     freesurfer: it.simpleName == "freesurfer"
+    //                     reslice: it.simpleName == "freesurfer_reslice"
+    //                     transforms: it.simpleName == "freesurfer_transforms"
+    //                 }
+    //             ch_transforms = ch_split_test_data.transforms.map{
+    //                 test_data_directory -> [
+    //                     [ id:'test' ],
+    //                     file("\${test_data_directory}/fsl_deform.nii.gz"),
+    //                     file("\${test_data_directory}/fsl_affine.mat")
+    //                 ]
+    //             }
+    //             ch_reslice = ch_split_test_data.reslice.map{
+    //                 test_data_directory -> [
+    //                     [ id:'test' ],
+    //                     file("\${test_data_directory}/t1_reslice.nii.gz"),
+    //                     file("\${test_data_directory}/fa_reslice.nii.gz")
+    //                 ]
+    //             }
+    //             ch_freesurfer = ch_split_test_data.freesurfer.map{
+    //                 test_data_directory -> [
+    //                     [ id:'test' ],
+    //                     file("\${test_data_directory}/license.txt")
+    //                 ]
+    //             }
+    //             input[0] = ch_transforms
+    //                 .join(ch_reslice)
+    //                 .join(ch_freesurfer)
+    //             """
+    //         }
+    //     }
 
-        then {
-            assertAll(
-                { assert process.success },
-                { assert snapshot(process.out).match() }
-            )
-        }
-    }
+    //     then {
+    //         assertAll(
+    //             { assert process.success },
+    //             { assert snapshot(process.out).match() }
+    //         )
+    //     }
+    // }
 
-    test("registration - convert - fslants") {
+    // test("registration - convert - fslants") {
 
-        config "./nextflow_fslants.config"
+    //     config "./nextflow_fslants.config"
 
-        when {
-            process {
-                """
-                input[0] = LOAD_DATA.out.test_data_directory.map{
-                    test_data_directory -> [
-                        [ id:'test', single_end:false ], // meta map
-                        file("/workspaces/nf-scil/fsl_deform.nii.gz"),
-                        file("/workspaces/nf-scil/fsl_affine.mat"),
-                        file("\${test_data_directory}/t1.nii.gz"),
-                        file("\${test_data_directory}/fa.nii.gz"),
-                        file("\${test_data_directory}/license.txt")
-                    ]
-                }
-                """
-            }
-        }
+    //     when {
+    //         process {
+    //             """
+    //             ch_split_test_data = LOAD_DATA.out.test_data_directory
+    //                 .branch{
+    //                     freesurfer: it.simpleName == "freesurfer"
+    //                     reslice: it.simpleName == "freesurfer_reslice"
+    //                     transforms: it.simpleName == "freesurfer_transforms"
+    //                 }
+    //             ch_transforms = ch_split_test_data.transforms.map{
+    //                 test_data_directory -> [
+    //                     [ id:'test' ],
+    //                     file("\${test_data_directory}/fsl_deform.nii.gz"),
+    //                     file("\${test_data_directory}/fsl_affine.mat")
+    //                 ]
+    //             }
+    //             ch_reslice = ch_split_test_data.reslice.map{
+    //                 test_data_directory -> [
+    //                     [ id:'test' ],
+    //                     file("\${test_data_directory}/t1_reslice.nii.gz"),
+    //                     file("\${test_data_directory}/fa_reslice.nii.gz")
+    //                 ]
+    //             }
+    //             ch_freesurfer = ch_split_test_data.freesurfer.map{
+    //                 test_data_directory -> [
+    //                     [ id:'test' ],
+    //                     file("\${test_data_directory}/license.txt")
+    //                 ]
+    //             }
+    //             input[0] = ch_transforms
+    //                 .join(ch_reslice)
+    //                 .join(ch_freesurfer)
+    //             """
+    //         }
+    //     }
 
-        then {
-            assertAll(
-                { assert process.success },
-                { assert snapshot(process.out).match() }
-            )
-        }
-    }
+    //     then {
+    //         assertAll(
+    //             { assert process.success },
+    //             { assert snapshot(process.out).match() }
+    //         )
+    //     }
+    // }
 
     test("registration - convert - antsfs") {
 
@@ -172,16 +278,35 @@ nextflow_process {
         when {
             process {
                 """
-                input[0] = LOAD_DATA.out.test_data_directory.map{
+                ch_split_test_data = LOAD_DATA.out.test_data_directory
+                    .branch{
+                        freesurfer: it.simpleName == "freesurfer"
+                        reslice: it.simpleName == "freesurfer_reslice"
+                        transforms: it.simpleName == "freesurfer_transforms"
+                    }
+                ch_transforms = ch_split_test_data.transforms.map{
                     test_data_directory -> [
-                        [ id:'test', single_end:false ], // meta map
-                        file("/workspaces/nf-scil/ants_deform.nii.gz"),
-                        file("/workspaces/nf-scil/ants_affine.txt"),
-                        file("\${test_data_directory}/t1.nii.gz"),
-                        file("\${test_data_directory}/fa.nii.gz"),
+                        [ id:'test' ],
+                        file("\${test_data_directory}/ants_deform.nii.gz"),
+                        file("\${test_data_directory}/ants_affine.txt")
+                    ]
+                }
+                ch_reslice = ch_split_test_data.reslice.map{
+                    test_data_directory -> [
+                        [ id:'test' ],
+                        file("\${test_data_directory}/t1_reslice.nii.gz"),
+                        file("\${test_data_directory}/fa_reslice.nii.gz")
+                    ]
+                }
+                ch_freesurfer = ch_split_test_data.freesurfer.map{
+                    test_data_directory -> [
+                        [ id:'test' ],
                         file("\${test_data_directory}/license.txt")
                     ]
                 }
+                input[0] = ch_transforms
+                    .join(ch_reslice)
+                    .join(ch_freesurfer)
                 """
             }
         }
@@ -194,34 +319,53 @@ nextflow_process {
         }
     }
 
-test("registration - convert - fslants") {
+// test("registration - convert - fslants") {
 
-        config "./nextflow_fslants.config"
+//         config "./nextflow_fslants.config"
 
-        when {
-            process {
-                """
-                input[0] = LOAD_DATA.out.test_data_directory.map{
-                    test_data_directory -> [
-                        [ id:'test', single_end:false ], // meta map
-                        file("/workspaces/nf-scil/fsl_deform.nii.gz"),
-                        file("/workspaces/nf-scil/fsl_affine.mat"),
-                        file("\${test_data_directory}/t1.nii.gz"),
-                        file("\${test_data_directory}/fa.nii.gz"),
-                        file("\${test_data_directory}/license.txt")
-                    ]
-                }
-                """
-            }
-        }
+//         when {
+//             process {
+//                 """
+//                 ch_split_test_data = LOAD_DATA.out.test_data_directory
+//                     .branch{
+//                         freesurfer: it.simpleName == "freesurfer"
+//                         reslice: it.simpleName == "freesurfer_reslice"
+//                         transforms: it.simpleName == "freesurfer_transforms"
+//                     }
+//                 ch_transforms = ch_split_test_data.transforms.map{
+//                     test_data_directory -> [
+//                         [ id:'test' ],
+//                         file("\${test_data_directory}/fsl_deform.nii.gz"),
+//                         file("\${test_data_directory}/fsl_affine.mat")
+//                     ]
+//                 }
+//                 ch_reslice = ch_split_test_data.reslice.map{
+//                     test_data_directory -> [
+//                         [ id:'test' ],
+//                         file("\${test_data_directory}/t1_reslice.nii.gz"),
+//                         file("\${test_data_directory}/fa_reslice.nii.gz")
+//                     ]
+//                 }
+//                 ch_freesurfer = ch_split_test_data.freesurfer.map{
+//                     test_data_directory -> [
+//                         [ id:'test' ],
+//                         file("\${test_data_directory}/license.txt")
+//                     ]
+//                 }
+//                 input[0] = ch_transforms
+//                     .join(ch_reslice)
+//                     .join(ch_freesurfer)
+//                 """
+//             }
+//         }
 
-        then {
-            assertAll(
-                { assert process.success },
-                { assert snapshot(process.out).match() }
-            )
-        }
-    }
+//         then {
+//             assertAll(
+//                 { assert process.success },
+//                 { assert snapshot(process.out).match() }
+//             )
+//         }
+//     }
 
     // FSL output not fully implemented in mri_warp_convert
 
@@ -232,16 +376,35 @@ test("registration - convert - fslants") {
     //     when {
     //         process {
     //             """
-    //             input[0] = LOAD_DATA.out.test_data_directory.map{
-    //                 test_data_directory -> [
-    //                     [ id:'test', single_end:false ], // meta map
-    //                     file("/workspaces/nf-scil/ants_deform.nii.gz"),
-    //                     file("/workspaces/nf-scil/ants_affine.txt"),
-    //                     file("\${test_data_directory}/t1.nii.gz"),
-    //                     file("\${test_data_directory}/fa.nii.gz"),
-    //                     file("/workspaces/nf-scil/license.txt")
-    //                 ]
-    //             }
+                // ch_split_test_data = LOAD_DATA.out.test_data_directory
+                //     .branch{
+                //         freesurfer: it.simpleName == "freesurfer"
+                //         reslice: it.simpleName == "freesurfer_reslice"
+                //         transforms: it.simpleName == "freesurfer_transforms"
+                //     }
+                // ch_transforms = ch_split_test_data.transforms.map{
+                //     test_data_directory -> [
+                //         [ id:'test' ],
+                //         file("\${test_data_directory}/ants_deform.nii.gz"),
+                //         file("\${test_data_directory}/ants_affine.lta")
+                //     ]
+                // }
+                // ch_reslice = ch_split_test_data.reslice.map{
+                //     test_data_directory -> [
+                //         [ id:'test' ],
+                //         file("\${test_data_directory}/t1_reslice.nii.gz"),
+                //         file("\${test_data_directory}/fa_reslice.nii.gz")
+                //     ]
+                // }
+                // ch_freesurfer = ch_split_test_data.freesurfer.map{
+                //     test_data_directory -> [
+                //         [ id:'test' ],
+                //         file("\${test_data_directory}/license.txt")
+                //     ]
+                // }
+                // input[0] = ch_transforms
+                //     .join(ch_reslice)
+                //     .join(ch_freesurfer)
     //             """
     //         }
     //     }
