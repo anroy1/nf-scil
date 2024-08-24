@@ -4,6 +4,7 @@ process REGISTRATION_CONVERT {
 
     container "freesurfer/freesurfer:7.4.1"
     containerOptions "--entrypoint ''"
+    containerOptions "--env FSLOUTPUTTYPE='NIFTI_GZ'"
 
     input:
     tuple val(meta), path(deform), path(affine), path(source), path(target) /* optional, value = [] */, path(fs_license) /* optional, value = [] */
