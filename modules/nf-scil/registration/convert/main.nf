@@ -39,9 +39,6 @@ process REGISTRATION_CONVERT {
     export OMP_NUM_THREADS=1
     export OPENBLAS_NUM_THREADS=1
 
-    FSLOUTPUTTYPE=NIFTI_GZ
-    echo \$FSLOUTPUTTYPE
-
     cp $fs_license \$FREESURFER_HOME/license.txt
 
     declare -A affine_dictionnary=( ["--outlta"]="lta" \
