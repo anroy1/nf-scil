@@ -3,7 +3,6 @@ nextflow_workflow {
     name "Test Subworkflow ANATOMICAL_SEGMENTATION"
     script "../main.nf"
     workflow "ANATOMICAL_SEGMENTATION"
-    config "./nextflow.config"
 
     tag "subworkflows"
     tag "subworkflows_nfcore"
@@ -28,7 +27,7 @@ nextflow_workflow {
         }
 
     test("anatomical_segmentation - fslfast") {
-
+        config "./nextflow.config"
         when {
             workflow {
                 """
@@ -57,7 +56,7 @@ nextflow_workflow {
     }
 
     test("anatomical_segmentation - freesurferseg") {
-
+        config "./nextflow.config"
         when {
             workflow {
                 """
@@ -86,3 +85,27 @@ nextflow_workflow {
         }
     }
 }
+
+    test("anatomical_segmentation - synthseg") {
+        config "./nextflow_synth.config"
+        when {
+            workflow {
+                """
+                input[0] = LOAD_DATA.out.test_data_directory.map{
+                    test_data_directory -> [
+                        [ id:'test', single_end:false ], // meta map
+                        file("\${test_data_directory}/anat/anat_image.nii.gz", checkIfExists: true),
+                        []
+                    ]}
+                input[1] = []
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success},
+                { assert snapshot(workflow.out).match()}
+            )
+        }
+    }

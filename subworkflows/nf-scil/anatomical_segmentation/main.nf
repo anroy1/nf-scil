@@ -1,6 +1,9 @@
 // ** Importing modules from nf-scil ** //
 include { SEGMENTATION_FASTSEG       } from '../../../modules/nf-scil/segmentation/fastseg/main'
 include { SEGMENTATION_FREESURFERSEG } from '../../../modules/nf-scil/segmentation/freesurferseg/main'
+include { SEGMENTATION_SYNTHSEG      } from '../../../modules/nf-scil/segmentation/synthseg/main'
+
+params.run_synth = params.run_synth ?: false
 
 workflow ANATOMICAL_SEGMENTATION {
 
@@ -24,6 +27,19 @@ workflow ANATOMICAL_SEGMENTATION {
             wm_mask = SEGMENTATION_FREESURFERSEG.out.wm_mask
             gm_mask = SEGMENTATION_FREESURFERSEG.out.gm_mask
             csf_mask = SEGMENTATION_FREESURFERSEG.out.csf_mask
+            wm_map = Channel.empty()
+            gm_map = Channel.empty()
+            csf_map = Channel.empty()
+        }
+        else if ( params.run_synth ) {
+            // ** Freesurfer synthseg segmentation ** //
+            SEGMENTATION_SYNTHSEG ( ch_image )
+            ch_versions = ch_versions.mix(SEGMENTATION_SYNTHSEG.out.versions.first())
+
+            // ** Setting outputs ** //
+            wm_mask = SEGMENTATION_SYNTHSEG.out.wm_mask
+            gm_mask = SEGMENTATION_SYNTHSEG.out.gm_mask
+            csf_mask = SEGMENTATION_SYNTHSEG.out.csf_mask
             wm_map = Channel.empty()
             gm_map = Channel.empty()
             csf_map = Channel.empty()

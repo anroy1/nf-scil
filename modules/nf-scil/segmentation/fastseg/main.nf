@@ -7,7 +7,7 @@ process SEGMENTATION_FASTSEG {
         'scilus/scilus:2.0.2' }"
 
     input:
-        tuple val(meta), path(image), path(lesion)
+        tuple val(meta), path(image), path(lesion) /* optional, input = [] */
 
     output:
         tuple val(meta), path("*mask_wm.nii.gz")                , emit: wm_mask
