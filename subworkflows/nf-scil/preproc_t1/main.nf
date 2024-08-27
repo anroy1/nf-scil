@@ -7,6 +7,8 @@ include { BETCROP_SYNTHBET} from '../../../modules/nf-scil/betcrop/synthbet/main
 include { BETCROP_CROPVOLUME as BETCROP_CROPVOLUME_T1 } from '../../../modules/nf-scil/betcrop/cropvolume/main'
 include { BETCROP_CROPVOLUME as BETCROP_CROPVOLUME_MASK } from '../../../modules/nf-scil/betcrop/cropvolume/main'
 
+params.run_synth = params.run_synth ?: false
+
 workflow PREPROC_T1 {
 
     take:
@@ -17,8 +19,6 @@ workflow PREPROC_T1 {
         ch_ref_n4          // channel: [ val(meta), [ ref, ref_mask ] ]   , optional
         ch_ref_resample    // channel: [ val(meta), [ ref ] ]             , optional
         ch_weights         // channel: [ val(meta), [ weights ] ]         , optional
-
-        val_synth(false)   // value: (default: false)                     , optional
 
     main:
 
@@ -40,7 +40,7 @@ workflow PREPROC_T1 {
         ch_versions = ch_versions.mix(IMAGE_RESAMPLE.out.versions.first())
 
         // ** Brain extraction ** //
-        if ( val_synth ) {
+        if ( params.run_synth ) {
             ch_bet = IMAGE_RESAMPLE.out.image.join(ch_weights)
             BETCROP_SYNTHBET ( ch_bet )
             ch_versions = ch_versions.mix(BETCROP_SYNTHBET.out.versions.first())
