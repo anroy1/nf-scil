@@ -3,7 +3,6 @@ nextflow_workflow {
     name "Test Subworkflow REGISTRATION"
     script "../main.nf"
     workflow "REGISTRATION"
-    config "./nextflow.config"
 
     tag "subworkflows"
     tag "subworkflows_nfcore"
@@ -29,7 +28,7 @@ nextflow_workflow {
     }
 
     test("registration - antsRegistration") {
-
+        config "./nextflow.config"
         when {
             workflow {
                 """
@@ -49,6 +48,8 @@ nextflow_workflow {
                         file("\${test_data_directory}/fa.nii.gz")
                     ]}
                 input[3] = []
+                input[4] = []
+                input[5] = []
                 """
             }
         }
@@ -62,7 +63,7 @@ nextflow_workflow {
     }
 
     test("registration - SyNQuick") {
-
+        config "./nextflow.config"
         when {
             workflow {
                 """
@@ -78,6 +79,39 @@ nextflow_workflow {
                     ]}
                 input[2] = []
                 input[3] = []
+                input[4] = []
+                input[5] = []
+                """
+            }
+        }
+
+        then {
+            assertAll(
+                { assert workflow.success},
+                { assert snapshot(workflow.out).match()}
+            )
+        }
+    }
+
+    test("registration - surgery") {
+        config "./nextflow_surgery.config"
+        when {
+            workflow {
+                """
+                input[0] = LOAD_DATA.out.test_data_directory.map{
+                    test_data_directory -> [
+                        [ id:'test', single_end:false ],
+                        file("\${test_data_directory}/mni_masked_2x2x2.nii.gz")
+                    ]}
+                input[1] = LOAD_DATA.out.test_data_directory.map{
+                    test_data_directory -> [
+                        [ id:'test', single_end:false ],
+                        file("\${test_data_directory}/b0_mean.nii.gz")
+                    ]}
+                input[2] = []
+                input[3] = []
+                input[4] = []
+                input[5] = []
                 """
             }
         }

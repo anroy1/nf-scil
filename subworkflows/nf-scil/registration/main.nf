@@ -2,7 +2,7 @@ include { REGISTRATION_ANATTODWI  } from '../../../modules/nf-scil/registration/
 include { REGISTRATION_ANTS   } from '../../../modules/nf-scil/registration/ants/main'
 include { REGISTRATION_EASYREG } from '../../../modules/nf-scil/registration/easyreg/main'
 
-params.run_synth = params.run_synth ?: false
+params.run_surgery = params.run_surgery?: false
 
 workflow REGISTRATION {
 
@@ -37,7 +37,7 @@ workflow REGISTRATION {
             transfo_image = REGISTRATION_ANATTODWI.out.transfo_image
             transfo_trk = REGISTRATION_ANATTODWI.out.transfo_trk
         }
-        else if ( params.run_synth ) {
+        else if ( params.run_surgery ) {
             // ** Set up input channel ** //
             ch_register = ch_ref.combine(ch_image, by: 0)
                                 .combine(ch_ref_segmentation)
