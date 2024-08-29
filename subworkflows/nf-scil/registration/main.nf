@@ -1,5 +1,8 @@
 include { REGISTRATION_ANATTODWI  } from '../../../modules/nf-scil/registration/anattodwi/main'
 include { REGISTRATION_ANTS   } from '../../../modules/nf-scil/registration/ants/main'
+include { REGISTRATION_EASYREG } from '../../../modules/nf-scil/registration/easyreg/main'
+
+params.run_synth = params.run_synth ?: false
 
 workflow REGISTRATION {
 
@@ -13,6 +16,8 @@ workflow REGISTRATION {
         ch_ref                    // channel: [ val(meta), [ ref ] ]
         ch_metric                 // channel: [ val(meta), [ metric ] ], optional
         ch_mask                   // channel: [ val(meta), [ mask ] ], optional
+        ch_ref_segmentation       // channel: [ val(meta), [ ref_segmentation ] ], optional
+        ch_flo_segmentation       // channel: [ val(meta), [ flo_segmentation ] ], optional
 
     main:
 
@@ -31,6 +36,22 @@ workflow REGISTRATION {
             image_warped = REGISTRATION_ANATTODWI.out.t1_warped
             transfo_image = REGISTRATION_ANATTODWI.out.transfo_image
             transfo_trk = REGISTRATION_ANATTODWI.out.transfo_trk
+        }
+        else if ( params.run_synth ) {
+            // ** Set up input channel ** //
+            ch_register = ch_ref.combine(ch_image, by: 0)
+                                .combine(ch_ref_segmentation)
+                                .combine(ch_flo_segmentation)
+
+            // ** Registration using Easyreg ** //
+            REGISTRATION_EASYREG ( ch_register )
+            ch_versions = ch_versions.mix(REGISTRATION_EASYREG.out.versions.first())
+
+            // ** Setting outputs ** //
+            image_warped = REGISTRATION_EASYREG.out.flo_reg
+            transfo_image = REGISTRATION_EASYREG.out.fwd_field
+            transfo_trk = REGISTRATION_EASYREG.out.bak_field
+
         }
         else {
             // ** Set up input channel, input are inverted compared to REGISTRATION_ANATTODWI. ** //
