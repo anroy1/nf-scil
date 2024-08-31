@@ -146,8 +146,8 @@ nextflow_workflow {
         }
     }
 
-test("preproc_t1_synth") {
-        config "./nextflow_synth.config"
+test("preproc_t1_surgery") {
+        config "./nextflow_surgery.config"
 
         when {
             workflow {
