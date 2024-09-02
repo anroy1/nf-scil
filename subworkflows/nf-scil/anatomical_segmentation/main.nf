@@ -3,7 +3,7 @@ include { SEGMENTATION_FASTSEG       } from '../../../modules/nf-scil/segmentati
 include { SEGMENTATION_FREESURFERSEG } from '../../../modules/nf-scil/segmentation/freesurferseg/main'
 include { SEGMENTATION_SYNTHSEG      } from '../../../modules/nf-scil/segmentation/synthseg/main'
 
-params.run_synth = params.run_synth ?: false
+params.run_surgery = params.run_surgery ?: false
 
 workflow ANATOMICAL_SEGMENTATION {
 
@@ -31,7 +31,7 @@ workflow ANATOMICAL_SEGMENTATION {
             gm_map = Channel.empty()
             csf_map = Channel.empty()
         }
-        else if ( params.run_synth ) {
+        else if ( params.run_surgery ) {
             // ** Freesurfer synthseg segmentation ** //
             SEGMENTATION_SYNTHSEG ( ch_image )
             ch_versions = ch_versions.mix(SEGMENTATION_SYNTHSEG.out.versions.first())
