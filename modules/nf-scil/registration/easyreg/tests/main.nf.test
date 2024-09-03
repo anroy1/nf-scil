@@ -43,7 +43,15 @@ nextflow_process {
         then {
             assertAll(
                 { assert process.success },
-                { assert snapshot(process.out).match() }
+                { assert snapshot(
+                    niftiMD5SUM(process.out.ref_seg.get(0).get(1), 6),
+                    niftiMD5SUM(process.out.flo_seg.get(0).get(1), 6),
+                    niftiMD5SUM(process.out.ref_reg.get(0).get(1), 6),
+                    niftiMD5SUM(process.out.flo_reg.get(0).get(1), 6),
+                    niftiMD5SUM(process.out.fwd_field.get(0).get(1), 6),
+                    niftiMD5SUM(process.out.bak_field.get(0).get(1), 6),
+                    process.out.versions
+                ).match() }
             )
         }
     }

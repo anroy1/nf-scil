@@ -1,122 +1,15 @@
 {
     "registration - easyreg": {
         "content": [
-            {
-                "0": [
-                    [
-                        {
-                            "id": "test",
-                            "single_end": false
-                        },
-                        "test_reference_segmentation.nii.gz:md5,aeac0f1cf19381a7f40464408dc6b9e9"
-                    ]
-                ],
-                "1": [
-                    [
-                        {
-                            "id": "test",
-                            "single_end": false
-                        },
-                        "test_floating_segmentation.nii.gz:md5,c895e33807532642f197806b230aaa79"
-                    ]
-                ],
-                "2": [
-                    [
-                        {
-                            "id": "test",
-                            "single_end": false
-                        },
-                        "test_reference_registered.nii.gz:md5,cfaa3b3c6d30d25ef0b8dd5c6ecce0e4"
-                    ]
-                ],
-                "3": [
-                    [
-                        {
-                            "id": "test",
-                            "single_end": false
-                        },
-                        "test_floating_registered.nii.gz:md5,817e5d3913acdfe1176889ee8566f714"
-                    ]
-                ],
-                "4": [
-                    [
-                        {
-                            "id": "test",
-                            "single_end": false
-                        },
-                        "test_forward_field.nii.gz:md5,76e3ffa48bf6ba1b97d7e782e20686b8"
-                    ]
-                ],
-                "5": [
-                    [
-                        {
-                            "id": "test",
-                            "single_end": false
-                        },
-                        "test_backward_field.nii.gz:md5,99b2624aecaa1d0fe3e0633eab433344"
-                    ]
-                ],
-                "6": [
-                    "versions.yml:md5,4661210880c42a986923e8257f64c760"
-                ],
-                "bak_field": [
-                    [
-                        {
-                            "id": "test",
-                            "single_end": false
-                        },
-                        "test_backward_field.nii.gz:md5,99b2624aecaa1d0fe3e0633eab433344"
-                    ]
-                ],
-                "flo_reg": [
-                    [
-                        {
-                            "id": "test",
-                            "single_end": false
-                        },
-                        "test_floating_registered.nii.gz:md5,817e5d3913acdfe1176889ee8566f714"
-                    ]
-                ],
-                "flo_seg": [
-                    [
-                        {
-                            "id": "test",
-                            "single_end": false
-                        },
-                        "test_floating_segmentation.nii.gz:md5,c895e33807532642f197806b230aaa79"
-                    ]
-                ],
-                "fwd_field": [
-                    [
-                        {
-                            "id": "test",
-                            "single_end": false
-                        },
-                        "test_forward_field.nii.gz:md5,76e3ffa48bf6ba1b97d7e782e20686b8"
-                    ]
-                ],
-                "ref_reg": [
-                    [
-                        {
-                            "id": "test",
-                            "single_end": false
-                        },
-                        "test_reference_registered.nii.gz:md5,cfaa3b3c6d30d25ef0b8dd5c6ecce0e4"
-                    ]
-                ],
-                "ref_seg": [
-                    [
-                        {
-                            "id": "test",
-                            "single_end": false
-                        },
-                        "test_reference_segmentation.nii.gz:md5,aeac0f1cf19381a7f40464408dc6b9e9"
-                    ]
-                ],
-                "versions": [
-                    "versions.yml:md5,4661210880c42a986923e8257f64c760"
-                ]
-            }
+            "test_reference_segmentation.nii.gz:md5:header,d7d123ff54be81edabd50a08e6c0ef86,data,8043f2a051e6c31c80405fd2ae6b5c3d",
+            "test_floating_segmentation.nii.gz:md5:header,d773c9507f9637b269ff0293e5b571b6,data,9f90a28d360043b9a9a2f6caecd9d97f",
+            "test_reference_registered.nii.gz:md5:header,d1b4c1d6ea3958a942237859fc5c8bf9,data,db57287a4b6d1f2136e0f148a19a9afd",
+            "test_floating_registered.nii.gz:md5:header,5c6a53aecafb33aa215890c921911298,data,4bf56478dc20f15903c8933825a4d875",
+            "test_forward_field.nii.gz:md5:header,a44c016d46c40fb91d2b859a3452afe3,data,323c4eafea83b75bea61ec69b2911ae4",
+            "test_backward_field.nii.gz:md5:header,de97fc6763dae228667018a601d72f54,data,3991957cdd92a5519848eeb3cb30e949",
+            [
+                "versions.yml:md5,4661210880c42a986923e8257f64c760"
+            ]
         ],
         "meta": {
             "nf-test": "0.9.0-rc1",
