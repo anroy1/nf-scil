@@ -2,7 +2,7 @@ process REGISTRATION_SYNTHREGISTRATION {
     tag "$meta.id"
     label 'process_single'
 
-    container "freesurfer/synthmorph:2"
+    container "freesurfer/synthmorph:3"
     containerOptions "--entrypoint ''"
 
     input:
