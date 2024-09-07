@@ -49,12 +49,12 @@ process SEGMENTATION_SYNTHSEG {
 
     # WM Mask
     mri_binarize --i t1.nii.gz \
-                --match 2 7 12 16 28 41 46 49 51 60 \
+                --match 2 7 10 12 13 16 28 41 46 49 51 52 60 \
                 --o ${prefix}__mask_wm.nii.gz
 
     # GM Mask
     mri_binarize --i t1.nii.gz \
-                --match 3 8 11 17 18 26 42 47 50 \
+                --match 3 8 11 17 18 26 42 47 50 52 53 54 58 \
                 --o ${prefix}__mask_gm.nii.gz
 
     # CSF Mask
@@ -64,7 +64,7 @@ process SEGMENTATION_SYNTHSEG {
 
     if [[ -f "$lesion" ]];
     then
-        mri_binarize --i ${prefix}__mask_wm.nii.gz --union $lesion --o ${prefix}__mask_wm.nii.gz
+        mri_binarize --i ${prefix}__mask_wm.nii.gz --merge $lesion --min 0.5 --o ${prefix}__mask_wm.nii.gz
     fi
 
     mri_convert -i ${prefix}__mask_wm.nii.gz --out_data_type uchar -o ${prefix}__mask_wm.nii.gz
