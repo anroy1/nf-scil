@@ -79,7 +79,7 @@ workflow PREPROC_T1 {
         image_bet       = image_bet                              // channel: [ val(meta), [ t1 ] ]
         mask_bet        = mask_bet                               // channel: [ val(meta), [ mask ] ]
         crop_box        = BETCROP_CROPVOLUME_T1.out.bounding_box // channel: [ val(meta), [ bounding_box ] ]
-        mask_final      = BETCROP_CROPVOLUME_MASK.out.image      // channel: [ val(meta), [ mask ] ]
+        mask_final      = BETCROP_CROPVOLUME_MASK.out.image      // channel: [ val(meta), [ image ] ]
         t1_final        = BETCROP_CROPVOLUME_T1.out.image        // channel: [ val(meta), [ image ] ]
         versions        = ch_versions                            // channel: [ versions.yml ]
 }

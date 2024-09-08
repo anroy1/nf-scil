@@ -82,7 +82,17 @@ nextflow_workflow {
         then {
             assertAll(
                 { assert workflow.success},
-                { assert snapshot(workflow.out).match()}
+                { assert snapshot(
+                    niftiMD5SUM(workflow.out.image_nlmeans.get(0).get(1)),
+                    niftiMD5SUM(workflow.out.image_N4.get(0).get(1)),
+                    niftiMD5SUM(workflow.out.image_resample.get(0).get(1)),
+                    niftiMD5SUM(workflow.out.image_bet.get(0).get(1)),
+                    niftiMD5SUM(workflow.out.mask_bet.get(0).get(1)),
+                    file(workflow.out.crop_box.get(0).get(1)),
+                    niftiMD5SUM(workflow.out.mask_final.get(0).get(1)),
+                    niftiMD5SUM(workflow.out.t1_final.get(0).get(1)),
+                    workflow.out.versions
+                ).match()}
             )
         }
     }
@@ -141,7 +151,17 @@ nextflow_workflow {
         then {
             assertAll(
                 { assert workflow.success},
-                { assert snapshot(workflow.out).match()}
+                { assert snapshot(
+                    niftiMD5SUM(workflow.out.image_nlmeans.get(0).get(1)),
+                    niftiMD5SUM(workflow.out.image_N4.get(0).get(1)),
+                    niftiMD5SUM(workflow.out.image_resample.get(0).get(1)),
+                    niftiMD5SUM(workflow.out.image_bet.get(0).get(1)),
+                    niftiMD5SUM(workflow.out.mask_bet.get(0).get(1)),
+                    workflow.out.crop_box,
+                    niftiMD5SUM(workflow.out.mask_final.get(0).get(1)),
+                    niftiMD5SUM(workflow.out.t1_final.get(0).get(1)),
+                    workflow.out.versions
+                ).match()}
             )
         }
     }
@@ -200,7 +220,17 @@ test("preproc_t1_surgery") {
         then {
             assertAll(
                 { assert workflow.success},
-                { assert snapshot(workflow.out).match()}
+                { assert snapshot(
+                    niftiMD5SUM(workflow.out.image_nlmeans.get(0).get(1)),
+                    niftiMD5SUM(workflow.out.image_N4.get(0).get(1)),
+                    niftiMD5SUM(workflow.out.image_resample.get(0).get(1)),
+                    niftiMD5SUM(workflow.out.image_bet.get(0).get(1)),
+                    niftiMD5SUM(workflow.out.mask_bet.get(0).get(1)),
+                    file(workflow.out.crop_box.get(0).get(1)),
+                    niftiMD5SUM(workflow.out.mask_final.get(0).get(1)),
+                    niftiMD5SUM(workflow.out.t1_final.get(0).get(1)),
+                    workflow.out.versions
+                ).match()}
             )
         }
     }
