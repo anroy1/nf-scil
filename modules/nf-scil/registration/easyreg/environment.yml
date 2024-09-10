@@ -1,0 +1,6 @@
+name: "registration_easyreg"
+channels:
+  - Docker
+  - Apptainer
+dependencies:
+  - "Freesurfer"
