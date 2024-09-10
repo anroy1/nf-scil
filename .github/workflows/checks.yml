@@ -163,12 +163,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/upload-artifact/merge@v4
+        continue-on-error: true
         with:
           name: nf-test-reports
           pattern: reports-*
           delete-merged: true
           retention-days: 10
           compression-level: 9
+
 
   confirm-pass:
     name: status
