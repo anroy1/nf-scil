@@ -13,7 +13,7 @@ def fetch_archive ( name, destination, remote, database, data_identifiers ) {
     // Fetch file from remote if not present in cache
     def data_id = data_identifiers[name]
     if ( !data_id ) {
-        throw new Exception("Invalid data identifier supplied: $name")
+        error "Invalid test data identifier supplied: $name"
     }
 
     def cache_entry = file("$cache_location/$data_id")
