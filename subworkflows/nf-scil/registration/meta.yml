@@ -75,6 +75,12 @@ output:
         Channel containing warped moving images. Typically, this would be the warped T1 in DWI space.
         Structure: [ val(meta), path(image) ]
       pattern: "*.{nii,nii.gz}"
+  - ref_warped:
+      type: file
+      description: |
+        Channel containing warped reference images. Typically, this would be the warped T1 in DWI space.
+        Structure: [ val(meta), path(image) ]
+      pattern: "*.{nii,nii.gz}"
   - transfo_image:
       type: file
       description: |
@@ -91,6 +97,16 @@ output:
         be used to register tractograms or bundle in the subject's anatomical space.
         Structure: [ val(meta), [ path(inverseAffine), path(inverseWarp) ]
       pattern: "*.{nii,nii.gz,mat}"
+  - ref_segmentation:
+      type: file
+      description: |
+        Channel containing the file with the SynthSeg v2 (non-robust) segmentation + parcellation of the reference image.
+      pattern: "*.{nii,nii.gz}"
+  - flo_segmentation:
+      type: file
+      description: |
+        Channel containing the file with the SynthSeg v2 (non-robust) segmentation + parcellation of the floating image.
+      pattern: "*.{nii,nii.gz}"
   - versions:
       type: file
       description: |

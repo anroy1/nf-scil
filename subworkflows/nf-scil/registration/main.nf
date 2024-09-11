@@ -34,14 +34,17 @@ workflow REGISTRATION {
 
             // ** Setting outputs ** //
             image_warped = REGISTRATION_ANATTODWI.out.t1_warped
+            ref_warped = Channel.empty()
             transfo_image = REGISTRATION_ANATTODWI.out.transfo_image
             transfo_trk = REGISTRATION_ANATTODWI.out.transfo_trk
+            ref_segmentation = Channel.empty()
+            image_segmentation = Channel.empty()
         }
         else if ( params.run_surgery ) {
             // ** Set up input channel ** //
             ch_register = ch_ref.combine(ch_image, by: 0)
-                                .combine(ch_ref_segmentation)
-                                .combine(ch_flo_segmentation)
+                                .combine(ch_ref_segmentation, by: 0)
+                                .combine(ch_flo_segmentation, by: 0)
 
             // ** Registration using Easyreg ** //
             REGISTRATION_EASYREG ( ch_register )
@@ -50,7 +53,15 @@ workflow REGISTRATION {
             // ** Setting outputs ** //
             image_warped = REGISTRATION_EASYREG.out.flo_reg
             transfo_image = REGISTRATION_EASYREG.out.fwd_field
+                                                    .map{ it + [[]] }
             transfo_trk = REGISTRATION_EASYREG.out.bak_field
+                                                    .map{ [[]] + it }
+            ref_warped - REGISTRATON_EASYREG.out.ref_reg
+
+            // ** Setting optional outputs. If segmentations are not provided as inputs, ** //
+            // ** easyreg will outputs synthseg segmentations ** //
+            ref_segmentation = ch_ref_segmentation ? REGISTRATION_EASYREG.out.ref_seg : Channel.empty()
+            flo_segmentation = ch_ref_segmentation ? REGISTRATION_EASYREG.out.flo_seg : Channel.empty()
 
         }
         else {
@@ -72,14 +83,20 @@ workflow REGISTRATION {
 
             // ** Setting outputs ** //
             image_warped = REGISTRATION_ANTS.out.image
+            ref_warped = Channel.empty()
             transfo_image = REGISTRATION_ANTS.out.transfo_image
             transfo_trk = REGISTRATION_ANTS.out.transfo_trk
+            ref_segmentation = Channel.empty()
+            flo_segmentation = Channel.empty()
         }
 
     emit:
         image_warped  = image_warped           // channel: [ val(meta), [ image ] ]
+        ref_warped = ref_warped                // channel: [ val(meta), [ ref ] ]
         transfo_image = transfo_image          // channel: [ val(meta), [ warp, affine ] ]
         transfo_trk   = transfo_trk            // channel: [ val(meta), [ inverseAffine, inverseWarp ] ]
+        ref_segmentation = ref_segmentation    // channel: [ val(meta), [ ref_seg ] ]
+        flo_segmentation = flo_segmentation    // channel: [ val(meta), [ flo_seg ] ]
 
         versions = ch_versions                 // channel: [ versions.yml ]
 }
