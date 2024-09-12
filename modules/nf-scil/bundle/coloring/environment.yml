@@ -1,0 +1,7 @@
+---
+name: "bundle_coloring"
+channels:
+  - Docker
+  - Apptainer
+dependencies:
+  - "scilpy"
