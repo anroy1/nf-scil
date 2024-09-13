@@ -58,7 +58,12 @@ nextflow_workflow {
         then {
             assertAll(
                 { assert workflow.success},
-                { assert snapshot(workflow.out).match()}
+                { assert snapshot(
+                    niftiMD5SUM(workflow.out.image_warped.get(0).get(1)),
+                    workflow.out.transfo_image,
+                    workflow.out.transfo_trk,
+                    workflow.out.versions
+                ).match()}
             )
         }
     }
@@ -89,7 +94,12 @@ nextflow_workflow {
         then {
             assertAll(
                 { assert workflow.success},
-                { assert snapshot(workflow.out).match()}
+                { assert snapshot(
+                    niftiMD5SUM(workflow.out.image_warped.get(0).get(1)),
+                    workflow.out.transfo_image,
+                    workflow.out.transfo_trk,
+                    workflow.out.versions
+                ).match()}
             )
         }
     }
@@ -120,7 +130,15 @@ nextflow_workflow {
         then {
             assertAll(
                 { assert workflow.success},
-                { assert snapshot(workflow.out).match()}
+                { assert snapshot(
+                    niftiMD5SUM(workflow.out.image_warped.get(0).get(1)),
+                    niftiMD5SUM(workflow.out.ref_warped.get(0).get(1)),
+                    workflow.out.transfo_image,
+                    workflow.out.transfo_trk,
+                    niftiMD5SUM(workflow.out.segmentation.get(0).get(1)),
+                    niftiMD5SUM(workflow.out.ref_segmentation.get(0).get(1)),
+                    workflow.out.versions
+                ).match()}
             )
         }
     }

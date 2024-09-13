@@ -53,20 +53,21 @@ input:
         REGISTRATION_ANTS, see the description section above for more details.
         Structure: [ val(meta), path(mask) ]
       pattern: "*.{nii,nii.gz}"
+  - ch_segmentation:
+      type: file
+      description: |
+        The input channel containing the the SynthSeg v2 (non-robust) segmentation + parcellation of the moving (floating in Easyreg naming convention) image.
+        If it des not exist, Easyreg will create it. If it already exists (e.g., from a previous EasyReg run),
+        then EasyReg will read it from disk (which is faster than segmenting).
+      pattern: "*.{nii,nii.gz}"
   - ch_ref_segmentation:
       type: file
       description: |
-        The input channel containing the the SynthSeg v2 (non-robust) segmentation + parcellation of the reference image.
+        The input channel containing the the SynthSeg v2 (non-robust) segmentation + parcellation of the fixed (reference in Easyreg naming convention) image.
         If it des not exist, Easyreg will create it. If it already exists (e.g., from a previous EasyReg run),
         then EasyReg will read it from disk (which is faster than segmenting).
       pattern: "*.{nii,nii.gz}"
-  - ch_flo_segmentation:
-      type: file
-      description: |
-        The input channel containing the the SynthSeg v2 (non-robust) segmentation + parcellation of the floating image.
-        If it des not exist, Easyreg will create it. If it already exists (e.g., from a previous EasyReg run),
-        then EasyReg will read it from disk (which is faster than segmenting).
-      pattern: "*.{nii,nii.gz}"
+
 
 output:
   - image_warped:
@@ -97,15 +98,15 @@ output:
         be used to register tractograms or bundle in the subject's anatomical space.
         Structure: [ val(meta), [ path(inverseAffine), path(inverseWarp) ]
       pattern: "*.{nii,nii.gz,mat}"
-  - ref_segmentation:
+  - out_segmentation:
       type: file
       description: |
-        Channel containing the file with the SynthSeg v2 (non-robust) segmentation + parcellation of the reference image.
+        Channel containing the file with the SynthSeg v2 (non-robust) segmentation + parcellation of the moving (floating in Easyreg naming convention) image.
       pattern: "*.{nii,nii.gz}"
-  - flo_segmentation:
+  - out_ref_segmentation:
       type: file
       description: |
-        Channel containing the file with the SynthSeg v2 (non-robust) segmentation + parcellation of the floating image.
+        Channel containing the file with the SynthSeg v2 (non-robust) segmentation + parcellation of the fixed (reference in Easyreg naming convention) image.
       pattern: "*.{nii,nii.gz}"
   - versions:
       type: file
