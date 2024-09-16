@@ -57,14 +57,14 @@ input:
       type: file
       description: |
         The input channel containing the the SynthSeg v2 (non-robust) segmentation + parcellation of the moving (floating in Easyreg naming convention) image.
-        If it des not exist, Easyreg will create it. If it already exists (e.g., from a previous EasyReg run),
+        If it does not exist, Easyreg will create it. If it already exists (e.g., from a previous EasyReg run),
         then EasyReg will read it from disk (which is faster than segmenting).
       pattern: "*.{nii,nii.gz}"
   - ch_ref_segmentation:
       type: file
       description: |
-        The input channel containing the the SynthSeg v2 (non-robust) segmentation + parcellation of the fixed (reference in Easyreg naming convention) image.
-        If it des not exist, Easyreg will create it. If it already exists (e.g., from a previous EasyReg run),
+        The input channel containing the SynthSeg v2 (non-robust) segmentation + parcellation of the fixed (reference in Easyreg naming convention) image.
+        If it does not exist, Easyreg will create it. If it already exists (e.g., from a previous EasyReg run),
         then EasyReg will read it from disk (which is faster than segmenting).
       pattern: "*.{nii,nii.gz}"
 
