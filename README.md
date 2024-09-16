@@ -1,3 +1,7 @@
+> [!CAUTION]
+> `nf-scil` is deprecated and will be archived soon. New PRs and issues on this repository will be closed automatically.
+> All future project development is hosted on 🧠 [nf-neuro](https://github.com/scilus/nf-neuro) 🧠. See you there 🚀
+
 <p align="center">
   <img src="docs/images/nf-scil_logo_light.png#gh-light-mode-only" alt="Sublime's custom image"/>
 </p> <!-- omit in toc -->
