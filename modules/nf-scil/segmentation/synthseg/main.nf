@@ -1,9 +1,10 @@
 process SEGMENTATION_SYNTHSEG {
     tag "$meta.id"
     label 'process_single'
+    label 'process_high'
 
     container "freesurfer/freesurfer:7.4.1"
-    containerOptions "--entrypoint ''"
+    //containerOptions "--entrypoint ''"
 
     input:
     tuple val(meta), path(image), path(lesion) /* optional, input = [] */, path(fs_license) /* optional, input = [] */
@@ -42,10 +43,6 @@ process SEGMENTATION_SYNTHSEG {
     cp $fs_license \$FREESURFER_HOME/license.txt
 
     mri_synthseg --i $image --threads $task.cpus --o t1.nii.gz $gpu $parc $robust $fast $ct $output_resample $output_vol $output_qc $crop
-
-    if [${prefix}__resampled_image.nii.gz]; then
-        mv ${prefix}__resampled_image.nii.gz test_resample.nii.gz
-    fi
 
     # WM Mask
     mri_binarize --i t1.nii.gz \
