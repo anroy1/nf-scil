@@ -44,7 +44,7 @@ nextflow_process {
                 { assert snapshot(
                     niftiMD5SUM(process.out.warped_image.get(0).get(1)),
                     niftiMD5SUM(process.out.deform_transform.get(0).get(1)),
-                    file(process.out.init_transform.get(0).get(1)),
+                    process.out.init_transform,
                     process.out.versions
                 ).match() }
             )
