@@ -100,7 +100,7 @@ nextflow_workflow {
     }
 
     test("anatomical_segmentation - synthseg") {
-        config "./nextflow_surgery.config"
+        config "./nextflow_synthseg.config"
         when {
             workflow {
                 """

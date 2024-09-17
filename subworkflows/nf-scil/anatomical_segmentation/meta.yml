@@ -7,7 +7,7 @@ description: |
       and CSF masks/maps.
   2)  Channel with FreeSurfer's parcellations files will result in using Scilpy's tools to produce
       WM, GM, and CSF masks (probability maps are not produced with this option).
-  3)  Given the surgeryflow related parameter in entry, will use synthseg instead of FSL FAST, producing
+  3)  Given the synthseg related parameter in entry, will use synthseg instead of FSL FAST, producing
       WM, GM and CSF masks.
   Typical next steps after this subworkflow would be to combine the resulting masks/maps with fODF
   data to perform TRACKING.
