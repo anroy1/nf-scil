@@ -7,7 +7,7 @@ include { BETCROP_SYNTHBET} from '../../../modules/nf-scil/betcrop/synthbet/main
 include { BETCROP_CROPVOLUME as BETCROP_CROPVOLUME_T1 } from '../../../modules/nf-scil/betcrop/cropvolume/main'
 include { BETCROP_CROPVOLUME as BETCROP_CROPVOLUME_MASK } from '../../../modules/nf-scil/betcrop/cropvolume/main'
 
-params.run_surgery = params.run_surgery ?: false
+params.run_synthbet = params.run_synthbet ?: false
 
 workflow PREPROC_T1 {
 
@@ -40,7 +40,7 @@ workflow PREPROC_T1 {
         ch_versions = ch_versions.mix(IMAGE_RESAMPLE.out.versions.first())
 
         // ** Brain extraction ** //
-        if ( params.run_surgery ) {
+        if ( params.run_synthbet) {
             ch_bet = IMAGE_RESAMPLE.out.image.join(ch_weights)
             BETCROP_SYNTHBET ( ch_bet )
             ch_versions = ch_versions.mix(BETCROP_SYNTHBET.out.versions.first())

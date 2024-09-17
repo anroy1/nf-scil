@@ -166,8 +166,8 @@ nextflow_workflow {
         }
     }
 
-test("preproc_t1_surgery") {
-        config "./nextflow_surgery.config"
+test("preproc_t1_synthbet") {
+        config "./nextflow_synthbet.config"
 
         when {
             workflow {
@@ -226,7 +226,7 @@ test("preproc_t1_surgery") {
                     niftiMD5SUM(workflow.out.image_resample.get(0).get(1)),
                     niftiMD5SUM(workflow.out.image_bet.get(0).get(1)),
                     niftiMD5SUM(workflow.out.mask_bet.get(0).get(1)),
-                    file(workflow.out.crop_box.get(0).get(1)),
+                    workflow.out.crop_box,
                     niftiMD5SUM(workflow.out.mask_final.get(0).get(1)),
                     niftiMD5SUM(workflow.out.t1_final.get(0).get(1)),
                     workflow.out.versions
