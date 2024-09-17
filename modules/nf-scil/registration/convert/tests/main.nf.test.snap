@@ -46,7 +46,7 @@
             "nf-test": "0.9.0-rc1",
             "nextflow": "24.04.4"
         },
-        "timestamp": "2024-08-24T16:08:15.58638"
+        "timestamp": "2024-09-17T18:13:39.632131"
     },
     "registration - convert - default": {
         "content": [
@@ -95,7 +95,7 @@
             "nf-test": "0.9.0-rc1",
             "nextflow": "24.04.4"
         },
-        "timestamp": "2024-08-24T16:08:10.889119"
+        "timestamp": "2024-09-17T18:13:34.897607"
     },
     "registration - convert - antsfs": {
         "content": [
@@ -105,7 +105,7 @@
                         {
                             "id": "test"
                         },
-                        "test__init_warp.lta:md5,0cf9dc2bb741e4033499f2d594e08126"
+                        "test__init_warp.lta:md5,74ec8f54427d766cb525c70c8c288cb9"
                     ]
                 ],
                 "1": [
@@ -132,7 +132,7 @@
                         {
                             "id": "test"
                         },
-                        "test__init_warp.lta:md5,0cf9dc2bb741e4033499f2d594e08126"
+                        "test__init_warp.lta:md5,74ec8f54427d766cb525c70c8c288cb9"
                     ]
                 ],
                 "versions": [
@@ -144,7 +144,7 @@
             "nf-test": "0.9.0-rc1",
             "nextflow": "24.04.4"
         },
-        "timestamp": "2024-08-24T16:08:46.567673"
+        "timestamp": "2024-09-17T18:14:12.617303"
     },
     "registration - convert - fslants": {
         "content": [
@@ -193,7 +193,7 @@
             "nf-test": "0.9.0-rc1",
             "nextflow": "24.04.4"
         },
-        "timestamp": "2024-08-24T16:08:41.691193"
+        "timestamp": "2024-09-17T18:14:07.85049"
     },
     "registration - convert - fslfs": {
         "content": [
@@ -203,7 +203,7 @@
                         {
                             "id": "test"
                         },
-                        "test__init_warp.lta:md5,69310b331784f628561473adbd6680c8"
+                        "test__init_warp.lta:md5,4b2d78a1a34240dcf2d0abe0980549bd"
                     ]
                 ],
                 "1": [
@@ -230,7 +230,7 @@
                         {
                             "id": "test"
                         },
-                        "test__init_warp.lta:md5,69310b331784f628561473adbd6680c8"
+                        "test__init_warp.lta:md5,4b2d78a1a34240dcf2d0abe0980549bd"
                     ]
                 ],
                 "versions": [
@@ -242,6 +242,6 @@
             "nf-test": "0.9.0-rc1",
             "nextflow": "24.04.4"
         },
-        "timestamp": "2024-08-24T16:08:28.286402"
+        "timestamp": "2024-09-17T18:13:53.506966"
     }
 }
