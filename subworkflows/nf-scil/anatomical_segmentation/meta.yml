@@ -7,6 +7,8 @@ description: |
       and CSF masks/maps.
   2)  Channel with FreeSurfer's parcellations files will result in using Scilpy's tools to produce
       WM, GM, and CSF masks (probability maps are not produced with this option).
+  3)  Given the synthseg related parameter in entry, will use synthseg instead of FSL FAST, producing
+      WM, GM and CSF masks.
   Typical next steps after this subworkflow would be to combine the resulting masks/maps with fODF
   data to perform TRACKING.
 keywords:
@@ -17,6 +19,7 @@ keywords:
 components:
   - segmentation/fastseg
   - segmentation/freesurferseg
+  - segmentation/synthseg
 input:
   - ch_image:
       type: file
@@ -33,6 +36,12 @@ input:
         parcellations into masks.
         Structure: [ val(meta), path(aparc_aseg), path(wm_parc) ]
       pattern: "*.mgz"
+  - ch_lesion:
+      type: file
+      description: |
+        The optional input channel containing a Nifti lesion volume to correct the white matter with a lesion mask. The lesion mask must be a binary masks.
+        Structure: [ val(meta), path(image) ]
+      pattern: "*.{nii,nii.gz}"
 output:
   - wm_mask:
       type: file
@@ -59,21 +68,21 @@ output:
       type: file
       description: |
         Channel containing WM probability maps. Will be only outputted if FSL's fast segmentation
-        is used and not with FreeSurfer's parcellation files.
+        is used and not with Synthseg and FreeSurfer's parcellation files.
         Structure: [ val(meta), path(wm_maps) ]
       pattern: "*.{nii,nii.gz}"
   - gm_maps:
       type: file
       description: |
         Channel containing GM probability maps. Will be only outputted if FSL's fast segmentation
-        is used and not with FreeSurfer's parcellation files.
+        is used and not with Synthseg and FreeSurfer's parcellation files.
         Structure: [ val(meta), path(gm_maps) ]
       pattern: "*.{nii,nii.gz}"
   - csf_maps:
       type: file
       description: |
         Channel containing CSF probability maps. Will be only outputted if FSL's fast segmentation
-        is used and not with FreeSurfer's parcellation files.
+        is used and not with Synthseg and FreeSurfer's parcellation files.
         Structure: [ val(meta), path(csf_maps) ]
       pattern: "*.{nii,nii.gz}"
   - versions:
