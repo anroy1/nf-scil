@@ -35,7 +35,7 @@ input:
 
   - target:
       type: file
-      description: Fixed Nifti volume used for registration. Defines target image geometry
+      description: Fixed Nifti volume used for registration. Defines target image geometry. (optional)
       pattern: "*.{nii,nii.gz}"
 
   - fs_license:
@@ -50,15 +50,15 @@ output:
         Groovy Map containing sample information
         e.g. `[ id:'test', single_end:false ]`
 
-  - deform_transform:
-      type: file
-      description: Deform transform. Default usage outputs ANTs (ITK) format .nii.gz
-      pattern: "*.{nii,nii.gz,mgz,m3z}"
-
   - init_transform:
       type: file
       description: Init transform. Default usage outputs ANTs (ITK) format .txt
       pattern: "*.{txt,lta,mat,dat}"
+
+  - deform_transform:
+      type: file
+      description: Deform transform. Default usage outputs ANTs (ITK) format .nii.gz
+      pattern: "*.{nii,nii.gz,mgz,m3z}"
 
   - versions:
       type: file
