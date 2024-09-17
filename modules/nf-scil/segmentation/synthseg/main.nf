@@ -4,7 +4,6 @@ process SEGMENTATION_SYNTHSEG {
     label 'process_high'
 
     container "freesurfer/freesurfer:7.4.1"
-    //containerOptions "--entrypoint ''"
 
     input:
     tuple val(meta), path(image), path(lesion) /* optional, input = [] */, path(fs_license) /* optional, input = [] */
