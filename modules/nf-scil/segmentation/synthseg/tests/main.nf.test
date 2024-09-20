@@ -102,6 +102,7 @@ nextflow_process {
                     niftiMD5SUM(process.out.wm_mask.get(0).get(1)),
                     niftiMD5SUM(process.out.gm_mask.get(0).get(1)),
                     niftiMD5SUM(process.out.csf_mask.get(0).get(1)),
+                    niftiMD5SUM(process.out.parc.get(0).get(1)),
                     process.out.resample,
                     process.out.vol,
                     process.out.qc,

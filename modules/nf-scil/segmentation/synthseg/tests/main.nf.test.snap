@@ -1,9 +1,10 @@
 {
     "segmentation - synthseg - options": {
         "content": [
-            "test__mask_wm.nii.gz:md5:header,a0430ca63ccc3bb2b925694cb7568388,data,a7ad690eb017c4146332b0bdeb135aa8",
-            "test__mask_gm.nii.gz:md5:header,a0430ca63ccc3bb2b925694cb7568388,data,370281fcda8be302cd72060e761121d2",
-            "test__mask_csf.nii.gz:md5:header,a0430ca63ccc3bb2b925694cb7568388,data,3d227c46c2d58cf80284a6f48d13d792",
+            "test__mask_wm.nii.gz:md5:header,a0430ca63ccc3bb2b925694cb7568388,data,95946cf22f6adf539b65c72b49eb3b32",
+            "test__mask_gm.nii.gz:md5:header,a0430ca63ccc3bb2b925694cb7568388,data,a54f8c03a17a16d9271534c387434720",
+            "test__mask_csf.nii.gz:md5:header,a0430ca63ccc3bb2b925694cb7568388,data,3895c471bc8b06446a8adbba9fe235f7",
+            "test__parc.nii.gz:md5:header,a0430ca63ccc3bb2b925694cb7568388,data,cb9a481316ae64dceb229879bd0c6619",
             [
                 
             ],
@@ -12,7 +13,7 @@
                     {
                         "id": "test"
                     },
-                    "test__vol.csv:md5,d0a69e3e2fbd7184dfcdf8bc2c35d673"
+                    "test__vol.csv:md5,c5c29a038e4f43abcce1845bc429952c"
                 ]
             ],
             [
@@ -20,7 +21,7 @@
                     {
                         "id": "test"
                     },
-                    "test__qc.csv:md5,4627c87c018fe1e5f2b0803e78aff306"
+                    "test__qc.csv:md5,333de3d7b60916596f0460c808b598f5"
                 ]
             ],
             [
@@ -31,13 +32,13 @@
             "nf-test": "0.9.0-rc1",
             "nextflow": "24.04.4"
         },
-        "timestamp": "2024-09-17T17:33:59.710663"
+        "timestamp": "2024-09-20T14:42:35.40267"
     },
     "segmentation - synthseg - basic": {
         "content": [
-            "test__mask_wm.nii.gz:md5:header,a0430ca63ccc3bb2b925694cb7568388,data,10191bbea81929574adf7cf9b9122a07",
-            "test__mask_gm.nii.gz:md5:header,a0430ca63ccc3bb2b925694cb7568388,data,eb6e177ec5ede4102fec41163d0c612a",
-            "test__mask_csf.nii.gz:md5:header,a0430ca63ccc3bb2b925694cb7568388,data,27060f0edda8db50469061177e085d76",
+            "test__mask_wm.nii.gz:md5:header,a0430ca63ccc3bb2b925694cb7568388,data,1b5a4d63ae2b56d9d6936313b5225b55",
+            "test__mask_gm.nii.gz:md5:header,a0430ca63ccc3bb2b925694cb7568388,data,c093a4b4c8c5804342b7ea8eea6164fb",
+            "test__mask_csf.nii.gz:md5:header,a0430ca63ccc3bb2b925694cb7568388,data,c9abaab9c5e047fadf928a6520929d5e",
             [
                 "versions.yml:md5,b65418e9ce2ab1cce590b1f659e18c1d"
             ]
@@ -46,13 +47,13 @@
             "nf-test": "0.9.0-rc1",
             "nextflow": "24.04.4"
         },
-        "timestamp": "2024-09-17T17:33:11.109853"
+        "timestamp": "2024-09-20T14:40:33.985446"
     },
     "segmentation - synthseg - lesion": {
         "content": [
             "test__mask_wm.nii.gz:md5:header,a0430ca63ccc3bb2b925694cb7568388,data,6d99d71cff4a2f9d147c45b1ee36dce0",
-            "test__mask_gm.nii.gz:md5:header,a0430ca63ccc3bb2b925694cb7568388,data,eb6e177ec5ede4102fec41163d0c612a",
-            "test__mask_csf.nii.gz:md5:header,a0430ca63ccc3bb2b925694cb7568388,data,27060f0edda8db50469061177e085d76",
+            "test__mask_gm.nii.gz:md5:header,a0430ca63ccc3bb2b925694cb7568388,data,c093a4b4c8c5804342b7ea8eea6164fb",
+            "test__mask_csf.nii.gz:md5:header,a0430ca63ccc3bb2b925694cb7568388,data,c9abaab9c5e047fadf928a6520929d5e",
             [
                 "versions.yml:md5,b65418e9ce2ab1cce590b1f659e18c1d"
             ]
@@ -61,6 +62,6 @@
             "nf-test": "0.9.0-rc1",
             "nextflow": "24.04.4"
         },
-        "timestamp": "2024-09-17T17:36:18.384824"
+        "timestamp": "2024-09-20T14:44:24.290916"
     }
 }

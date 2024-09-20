@@ -53,6 +53,11 @@ output:
       description: Nifti CSF mask volume.
       pattern: "*.{nii,nii.gz}"
 
+  - parc:
+      type: file
+      description: Nifti cortical parcellation volume.
+      pattern: "*.{nii,nii.gz}"
+
   - vol:
       type: file
       description: (optional) Output CSV file with volumes for all structures and subjects.
